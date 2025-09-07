@@ -287,7 +287,7 @@ class FFmpegHandler {
         // 在 Electron 環境中，返回檔案路徑讓主進程處理
         return {
           success: true,
-          filePath: outputPath,
+          filePath: tempOutputPath,
           message: 'GIF 檔案已生成，請使用輸出管理器保存'
         };
       } else {
