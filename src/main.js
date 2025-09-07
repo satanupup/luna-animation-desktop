@@ -627,24 +627,46 @@ ipcMain.handle('path-get-cwd', async (_event) => {
 // 新增：從已生成的檔案保存 GIF
 ipcMain.handle('output-save-gif-from-file', async (_event, sourceFilePath, animationType, shape) => {
   try {
+    console.log('🔄 開始保存 GIF 檔案...');
+    console.log('  源檔案路徑:', sourceFilePath);
+    console.log('  動畫類型:', animationType);
+    console.log('  形狀:', shape);
+
+    // 檢查源檔案是否存在
+    try {
+      const sourceStats = await fs.promises.stat(sourceFilePath);
+      console.log('  源檔案大小:', sourceStats.size, 'bytes');
+    } catch (error) {
+      console.error('❌ 源檔案不存在:', sourceFilePath);
+      throw new Error(`源檔案不存在: ${sourceFilePath}`);
+    }
+
     const outputDir = path.join(os.homedir(), 'Luna-Animations', 'GIF');
+    console.log('  輸出目錄:', outputDir);
+
     await fs.promises.mkdir(outputDir, { recursive: true });
+    console.log('✅ 輸出目錄已創建');
 
     const filename = `luna-animation-${shape}-${animationType}-${Date.now()}.gif`;
     const targetFilePath = path.join(outputDir, filename);
+    console.log('  目標檔案路徑:', targetFilePath);
 
     // 複製檔案到輸出目錄
     await fs.promises.copyFile(sourceFilePath, targetFilePath);
+    console.log('✅ 檔案複製完成');
+
     const stats = await fs.promises.stat(targetFilePath);
+    console.log('  目標檔案大小:', stats.size, 'bytes');
 
     // 清理臨時檔案
     try {
       await fs.promises.unlink(sourceFilePath);
       console.log(`✅ 臨時檔案已清理: ${sourceFilePath}`);
     } catch (cleanupError) {
-      console.warn('清理臨時檔案失敗:', cleanupError);
+      console.warn('⚠️ 清理臨時檔案失敗:', cleanupError);
     }
 
+    console.log('🎉 GIF 檔案保存成功!');
     return { success: true, filename, path: targetFilePath, size: stats.size };
   } catch (error) {
     console.error('從檔案保存 GIF 失敗:', error);

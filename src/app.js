@@ -580,21 +580,31 @@ class LunaAnimationApp {
       let saveResult;
       if (gifResult.success && gifResult.filePath) {
         // 🔧 修復：FFmpeg 已經生成了檔案，我們需要移動它到輸出目錄
-        // 使用輸出管理器處理已生成的 GIF 檔案
-        saveResult = await window.electronAPI.output.saveGIFFromFile(
-          gifResult.filePath,
-          this.params.animationType,
-          this.params.shape
-        );
+        console.log('🔄 準備保存 GIF 檔案:', gifResult.filePath);
+
+        try {
+          // 使用輸出管理器處理已生成的 GIF 檔案
+          saveResult = await window.electronAPI.output.saveGIFFromFile(
+            gifResult.filePath,
+            this.params.animationType,
+            this.params.shape
+          );
+          console.log('✅ GIF 檔案保存結果:', saveResult);
+        } catch (saveError) {
+          console.error('❌ GIF 檔案保存失敗:', saveError);
+          this.showStatus(`❌ GIF 保存失敗：${saveError.message}`, 'error');
+          return;
+        }
       } else {
         // 瀏覽器環境或其他情況的處理
+        console.error('❌ GIF 生成結果無效:', gifResult);
         this.showStatus('❌ GIF 生成失敗：不支援的環境', 'error');
         return;
       }
 
       if (saveResult.success) {
         this.updateProgress(100, '完成！');
-        this.showStatus('✅ GIF 生成完成！', 'success');
+        this.showStatus(`✅ GIF 生成完成！檔案已保存到用戶目錄`, 'success');
 
         // 🔧 檢查是否在 Electron 環境中
         if (window.electronAPI && window.electronAPI.showMessageBox) {
@@ -604,7 +614,7 @@ class LunaAnimationApp {
             buttons: ['開啟檔案', '開啟資料夾', '關閉'],
             defaultId: 0,
             message: '🎉 GIF 動畫生成成功！',
-            detail: `檔案名稱: ${saveResult.filename}\n檔案大小: ${(saveResult.size / 1024).toFixed(1)} KB\n儲存位置: Luna-Animations/GIF/\n\n選擇您要執行的動作：`
+            detail: `檔案名稱: ${saveResult.filename}\n檔案大小: ${(saveResult.size / 1024).toFixed(1)} KB\n\n📁 儲存位置:\n${saveResult.path}\n\n💡 提示: 檔案保存在用戶目錄的 Luna-Animations/GIF/ 資料夾中\n\n選擇您要執行的動作：`
           });
 
           if (result.response === 0) {
@@ -620,6 +630,15 @@ class LunaAnimationApp {
           if (saveResult.filename) {
             console.log(`檔案名稱: ${saveResult.filename}`);
           }
+        }
+
+        // 🔧 添加檔案位置提示
+        console.log('📁 GIF 檔案保存位置說明:');
+        console.log('  用戶目錄: C:\\Users\\[用戶名]\\Luna-Animations\\GIF\\');
+        console.log('  不是應用程式目錄: 應用程式安裝目錄下的 Luna-Animations 資料夾');
+        if (saveResult && saveResult.filename) {
+          console.log('  檔案名稱:', saveResult.filename);
+          console.log('  完整路徑:', saveResult.path);
         }
       } else {
         this.showStatus('❌ 保存 GIF 失敗', 'error');
