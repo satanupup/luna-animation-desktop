@@ -1,26 +1,26 @@
 {
   "summary": {
     "totalTests": 4,
-    "passed": 3,
-    "failed": 1,
+    "passed": 4,
+    "failed": 0,
     "errors": 0,
-    "duration": 13542,
-    "successRate": 75
+    "duration": 13534,
+    "successRate": 100
   },
   "performance": [
     {
       "metric": "page_load_time",
-      "value": 2734,
+      "value": 2692,
       "unit": "ms"
     },
     {
       "metric": "frame_generation_time",
-      "value": 2285,
+      "value": 2269,
       "unit": "ms"
     },
     {
       "metric": "ui_response_time",
-      "value": 221.2,
+      "value": 217.6,
       "unit": "ms"
     },
     {
@@ -33,7 +33,7 @@
     {
       "test": "frame_sequence_generation",
       "status": "PASS",
-      "duration": 2285,
+      "duration": 2269,
       "message": "✅ PNG 幀序列生成完成！"
     },
     {
@@ -44,9 +44,9 @@
     },
     {
       "test": "ui_responsiveness",
-      "status": "FAIL",
-      "avgResponseTime": 221.2,
-      "message": "平均響應時間: 221.2ms"
+      "status": "PASS",
+      "avgResponseTime": 217.6,
+      "message": "平均響應時間: 217.6ms (良好)"
     },
     {
       "test": "user_experience",
@@ -56,7 +56,6 @@
     }
   ],
   "recommendations": [
-    "UI 響應時間可以進一步優化",
-    "修復失敗的測試項目以提升穩定性"
+    "UI 響應時間表現良好 (當前: 217.6ms)"
   ]
 }
