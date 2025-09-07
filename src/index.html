@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:;">
+  <title>璐娜的 GIF 動畫製作器 🌙</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="electron-app">
+  <div class="app-container">
+    <!-- 標題欄 -->
+    <header class="app-header">
+      <div class="header-content">
+        <h1>璐娜的 GIF 動畫製作器 🌙</h1>
+        <p class="subtitle">專為製作透明背景圓形動畫而設計</p>
+      </div>
+      <div class="header-actions">
+        <button id="helpBtn" class="header-btn" title="使用說明">
+          <span>❓</span>
+        </button>
+        <button id="settingsBtn" class="header-btn" title="設定">
+          <span>⚙️</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 主要內容區域 -->
+    <main class="main-content">
+      <!-- 製作方式選擇 -->
+      <section class="method-selector">
+        <h3>🎯 選擇製作方式</h3>
+        <div class="method-buttons">
+          <button class="method-btn active" data-method="frames">
+            <span class="method-icon">📸</span>
+            <span class="method-title">幀序列方式</span>
+            <span class="method-desc">推薦</span>
+          </button>
+          <button class="method-btn" data-method="ffmpeg">
+            <span class="method-icon">🎬</span>
+            <span class="method-title">FFmpeg 直接生成</span>
+            <span class="method-desc">一鍵 GIF</span>
+          </button>
+          <button class="method-btn" data-method="svg">
+            <span class="method-icon">🎨</span>
+            <span class="method-title">SVG 動畫</span>
+            <span class="method-desc">向量圖</span>
+          </button>
+          <button class="method-btn" data-method="record">
+            <span class="method-icon">📹</span>
+            <span class="method-title">螢幕錄製方式</span>
+            <span class="method-desc">快速</span>
+          </button>
+        </div>
+        <p id="methodDesc" class="method-description">
+          生成動畫幀序列並自動下載所有 PNG 檔案，然後用 ScreenToGif 組合成 GIF
+        </p>
+      </section>
+
+      <!-- 控制面板 -->
+      <section class="controls-section">
+        <div class="controls-grid">
+          <!-- 外觀設定 -->
+          <div class="control-group">
+            <h3>🎨 外觀設定</h3>
+            <div class="control-item">
+              <label for="shape">形狀類型:</label>
+              <select id="shape">
+                <optgroup label="基本形狀">
+                  <option value="circle">圓形 ⭕</option>
+                  <option value="square">正方形 ⬜</option>
+                  <option value="rectangle">長方形 ▭</option>
+                  <option value="triangle">三角形 🔺</option>
+                  <option value="diamond">菱形 💎</option>
+                  <option value="pentagon">五邊形 ⬟</option>
+                  <option value="hexagon">六邊形 ⬡</option>
+                  <option value="octagon">八邊形 ⬢</option>
+                </optgroup>
+                <optgroup label="箭頭系列">
+                  <option value="arrow-right">右箭頭 ➡️</option>
+                  <option value="arrow-left">左箭頭 ⬅️</option>
+                  <option value="arrow-up">上箭頭 ⬆️</option>
+                  <option value="arrow-down">下箭頭 ⬇️</option>
+                  <option value="arrow-double">雙向箭頭 ↔️</option>
+                  <option value="arrow-curved">彎曲箭頭 ↪️</option>
+                  <option value="arrow-block">方塊箭頭 ⬛➡️</option>
+                  <option value="arrow-chevron">V型箭頭 〉</option>
+                </optgroup>
+                <optgroup label="流程圖形狀">
+                  <option value="process">流程 ▭</option>
+                  <option value="decision">決策 ◇</option>
+                  <option value="document">文件 📄</option>
+                  <option value="database">資料庫 🗄️</option>
+                  <option value="cloud">雲端 ☁️</option>
+                  <option value="cylinder">圓柱 🗂️</option>
+                </optgroup>
+                <optgroup label="標註形狀">
+                  <option value="callout-round">圓形標註 💬</option>
+                  <option value="callout-square">方形標註 🗨️</option>
+                  <option value="callout-cloud">雲形標註 💭</option>
+                  <option value="banner">橫幅 🏷️</option>
+                  <option value="ribbon">緞帶 🎀</option>
+                </optgroup>
+                <optgroup label="特殊形狀">
+                  <option value="star">星形 ⭐</option>
+                  <option value="star-4">四角星 ✦</option>
+                  <option value="star-6">六角星 ✡️</option>
+                  <option value="heart">愛心 ❤️</option>
+                  <option value="cross">十字 ✚</option>
+                  <option value="line">直線 ➖</option>
+                  <option value="lightning">閃電 ⚡</option>
+                  <option value="gear">齒輪 ⚙️</option>
+                </optgroup>
+                <optgroup label="幾何圖形">
+                  <option value="parallelogram">平行四邊形 ▱</option>
+                  <option value="trapezoid">梯形 ⏢</option>
+                  <option value="ellipse">橢圓 ⭕</option>
+                  <option value="arc">弧形 ◜</option>
+                  <option value="sector">扇形 ◔</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="control-item">
+              <label for="color">顏色:</label>
+              <input type="color" id="color" value="#ff3b30">
+            </div>
+            <div class="control-item">
+              <label for="size">大小:</label>
+              <input type="range" id="size" min="20" max="80" value="40">
+              <span id="sizeValue" class="value-display">40px</span>
+            </div>
+            <div class="control-item">
+              <label>
+                <input type="checkbox" id="filled" checked>
+                實心填充 (取消勾選為空心)
+              </label>
+            </div>
+            <div class="control-item" id="strokeWidthContainer" style="display: none;">
+              <label for="strokeWidth">線條粗細:</label>
+              <input type="range" id="strokeWidth" min="1" max="8" value="4">
+              <span id="strokeWidthValue" class="value-display">4px</span>
+            </div>
+          </div>
+
+          <!-- 動畫效果 -->
+          <div class="control-group">
+            <h3>⚡ 動畫效果</h3>
+            <div class="control-item">
+              <label for="animationMode">動畫模式:</label>
+              <select id="animationMode">
+                <option value="loop">循環動畫</option>
+                <option value="enter-exit">進入+退出</option>
+                <option value="enter-only">僅進入</option>
+                <option value="exit-only">僅退出</option>
+              </select>
+            </div>
+            <div class="control-item">
+              <label for="animationType">動畫類型:</label>
+              <select id="animationType">
+                <option value="bounce">彈跳</option>
+                <option value="pulse">脈衝</option>
+                <option value="rotate">旋轉</option>
+                <option value="swing">擺動</option>
+                <option value="fade">淡入淡出</option>
+                <option value="slide">滑動</option>
+                <option value="zoom">縮放</option>
+                <option value="spin">自旋</option>
+              </select>
+            </div>
+            <div class="control-item">
+              <label for="speed">單次動畫速度:</label>
+              <input type="range" id="speed" min="200" max="3000" value="1000" step="100">
+              <span id="speedValue" class="value-display">1.0秒</span>
+            </div>
+            <div class="control-item">
+              <label for="loops">循環次數:</label>
+              <select id="loops">
+                <option value="infinite">無限循環</option>
+                <option value="1">1次</option>
+                <option value="2">2次</option>
+                <option value="3">3次</option>
+                <option value="5">5次</option>
+                <option value="10">10次</option>
+              </select>
+            </div>
+            <div class="control-item">
+              <label for="delay">動畫延遲:</label>
+              <input type="range" id="delay" min="0" max="2000" value="0" step="100">
+              <span id="delayValue" class="value-display">0秒</span>
+            </div>
+            <div class="control-item">
+              <label for="rotation">旋轉角度:</label>
+              <input type="range" id="rotation" min="0" max="360" value="0" step="15">
+              <span id="rotationValue" class="value-display">0°</span>
+            </div>
+          </div>
+
+          <!-- 輸出設定 -->
+          <div class="control-group">
+            <h3>📹 輸出設定</h3>
+            <div class="control-item">
+              <label for="duration">總動畫時長:</label>
+              <input type="range" id="duration" min="1" max="30" value="3" step="0.5">
+              <span id="durationValue" class="value-display">3秒</span>
+            </div>
+            <div class="control-item">
+              <label for="quality">品質設定:</label>
+              <select id="quality">
+                <option value="12">快速 (12fps)</option>
+                <option value="15" selected>標準 (15fps)</option>
+                <option value="20">高品質 (20fps)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 預覽區域 -->
+      <section class="preview-section">
+        <h3>🎬 即時預覽</h3>
+        <div class="preview-container">
+          <canvas id="canvas" width="300" height="200"></canvas>
+        </div>
+      </section>
+
+      <!-- 操作按鈕 -->
+      <section class="actions-section">
+        <button id="generateBtn" class="generate-btn">
+          🎯 生成並下載動畫幀
+        </button>
+
+        <div class="progress-container" id="progressContainer" style="display: none;">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">準備中...</div>
+        </div>
+      </section>
+
+      <!-- 狀態訊息 -->
+      <section class="status-section">
+        <div id="status" class="status-message" style="display: none;"></div>
+      </section>
+    </main>
+
+    <!-- 說明面板 -->
+    <aside id="helpPanel" class="help-panel" style="display: none;">
+      <div class="help-content">
+        <div class="help-header">
+          <h3>💡 使用說明</h3>
+          <button id="closeHelpBtn" class="close-btn">✕</button>
+        </div>
+        <div class="help-body">
+          <div class="help-section">
+            <h4>📸 幀序列方式 (推薦)</h4>
+            <ol>
+              <li>調整動畫參數</li>
+              <li>點擊「生成並下載動畫幀」</li>
+              <li>等待自動下載所有 PNG 檔案</li>
+              <li>開啟 ScreenToGif</li>
+              <li>載入所有 PNG 檔案並匯出 GIF</li>
+            </ol>
+          </div>
+
+          <div class="help-section">
+            <h4>🎬 螢幕錄製方式</h4>
+            <ol>
+              <li>調整動畫參數</li>
+              <li>點擊「開始播放供錄製」</li>
+              <li>用 ScreenToGif 錄製動畫預覽</li>
+              <li>設定透明背景並匯出 GIF</li>
+            </ol>
+          </div>
+
+          <div class="help-section">
+            <h4>🔗 相關連結</h4>
+            <button id="openScreenToGifBtn" class="link-btn">
+              下載 ScreenToGif
+            </button>
+            <button id="openDownloadsFolderBtn" class="link-btn">
+              開啟下載資料夾
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 設定面板 -->
+    <aside id="settingsPanel" class="settings-panel" style="display: none;">
+      <div class="settings-content">
+        <div class="settings-header">
+          <h3>⚙️ 設定</h3>
+          <button id="closeSettingsBtn" class="close-btn">✕</button>
+        </div>
+        <div class="settings-body">
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="autoSavePreferences" checked>
+              自動儲存偏好設定
+            </label>
+          </div>
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="showProgressDetails" checked>
+              顯示詳細進度資訊
+            </label>
+          </div>
+          <div class="setting-item">
+            <button id="resetSettingsBtn" class="reset-btn">
+              重設所有設定
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- 載入動畫腳本 -->
+  <script src="animation-engine.js"></script>
+  <script src="ffmpeg-handler.js"></script>
+  <script src="svg-handler.js"></script>
+  <!-- 🚨 璐娜的緊急修復腳本 -->
+  <script src="../emergency-fix.js"></script>
+  <!-- 🔍 璐娜的診斷腳本 -->
+  <script src="../debug-test.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

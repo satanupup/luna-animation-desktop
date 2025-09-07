@@ -1,0 +1,94 @@
+{
+  "summary": {
+    "totalTests": 5,
+    "passed": 5,
+    "failed": 0,
+    "errors": 0,
+    "duration": 20
+  },
+  "analysis": {
+    "warnings": [],
+    "errors": [],
+    "suggestions": [
+      "所有核心功能正常，可以進行進階測試"
+    ]
+  },
+  "results": [
+    {
+      "type": "ANIMATION_ENGINE",
+      "name": "animation_engine_analysis",
+      "status": "PASS",
+      "details": {
+        "checks": {
+          "hasAnimationEngineClass": true,
+          "hasGetFrameDataURL": true,
+          "hasDataURLValidation": true,
+          "hasErrorHandling": true,
+          "hasTransparencyHandling": true
+        },
+        "score": 100
+      }
+    },
+    {
+      "type": "SVG_HANDLER",
+      "name": "svg_handler_analysis",
+      "status": "PASS",
+      "details": {
+        "checks": {
+          "hasSVGHandlerClass": true,
+          "hasGenerateSVGAnimation": true,
+          "hasGetSVGString": true,
+          "hasAnimationElements": true,
+          "hasShapeHandling": true
+        },
+        "score": 100
+      }
+    },
+    {
+      "type": "FFMPEG_HANDLER",
+      "name": "ffmpeg_handler_analysis",
+      "status": "PASS",
+      "details": {
+        "checks": {
+          "hasFFmpegHandlerClass": true,
+          "hasConvertFramesToGIF": true,
+          "hasGenerateGIFBuffer": true,
+          "hasPathFormatting": true,
+          "hasErrorHandling": true
+        },
+        "score": 100
+      }
+    },
+    {
+      "type": "EMERGENCY_FIX",
+      "name": "emergency_fix_analysis",
+      "status": "PASS",
+      "details": {
+        "checks": {
+          "hasEmergencyFix": true,
+          "hasFixFrameGenerator": true,
+          "hasFixSVGHandler": true,
+          "hasFixSVGCloneIssue": true,
+          "hasDataURLValidation": true,
+          "hasSafePNGSaver": true
+        },
+        "score": 100
+      }
+    },
+    {
+      "type": "DEBUG_TOOLS",
+      "name": "debug_tools_analysis",
+      "status": "PASS",
+      "details": {
+        "checks": {
+          "hasDiagnoseEnvironment": true,
+          "hasTestCanvasDataURL": true,
+          "hasTestSVGGeneration": true,
+          "hasTestFFmpegAvailability": true,
+          "hasRunFullDiagnosis": true
+        },
+        "score": 100
+      }
+    }
+  ]
+}

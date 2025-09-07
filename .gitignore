@@ -1,0 +1,67 @@
+# 依賴
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 建置輸出
+dist/
+build/
+out/
+
+# 快取
+.npm
+.eslintcache
+*.tgz
+*.tar.gz
+
+# 環境變數
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 編輯器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 作業系統
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Electron
+app/
+release/
+
+# 日誌
+logs
+*.log
+
+# 暫存檔案
+*.tmp
+*.temp
+
+# 備份檔案
+*.bak
+*.backup
+
+# FFmpeg 二進制文件（太大）
+ffmpeg-master-latest-win64-gpl-shared/
+
+# 測試輸出
+tests/ui-screenshots/
+tests/real-ui-outputs/
+
+# 輸出文件
+Luna-Animations/
+output/
+exports/

@@ -1,0 +1,111 @@
+{
+  "name": "luna-animation-desktop",
+  "version": "1.0.0",
+  "description": "璐娜的 GIF 動畫製作器 - Windows 離線桌面應用程式",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "debug": "electron . --inspect=9229",
+    "debug-brk": "electron . --inspect-brk=9229",
+    "no-devtools": "NO_DEVTOOLS=1 electron .",
+    "test": "npm run test:all-with-report",
+    "test:all": "node tests/test-runner.js",
+    "test:comprehensive": "node run-comprehensive-tests.js",
+    "test:complete": "node run-all-output-tests.js",
+    "test:output:all": "npm run test:complete",
+    "test:ui:click": "node tests/real-ui-output-test.js",
+    "test:ui:visual": "node tests/visual-regression-test.js",
+    "test:ui:playwright": "node tests/playwright-ui-test.js",
+    "test:ui:enhanced": "node tests/enhanced-ui-output-test.js",
+    "test:ui:validation": "npx playwright test tests/playwright-output-validation-test.js",
+    "test:quick": "node tests/quick-output-test.js",
+    "test:real": "node tests/real-function-test.js",
+    "test:final-report": "node generate-final-report.js",
+    "test:all-with-report": "npm run test:quick && npm run test:real && npm run test:final-report",
+    "test:output:comprehensive": "node tests/comprehensive-output-test.js",
+    "test:output:content": "npm run test:svg && npm run test:gif && npm run test:screenshots",
+    "test:screenshots": "node tests/screenshot-comparison-test.js",
+    "test:gif": "node tests/gif-validation-test.js",
+    "test:functionality": "node tests/functionality-test.js",
+    "test:performance": "node tests/performance-test.js",
+    "test:animation": "node tests/animation-test.js",
+    "test:ffmpeg": "node tests/ffmpeg-test.js",
+    "test:svg": "node tests/svg-test.js",
+    "test:e2e": "npx playwright test tests/e2e/",
+    "test:watch": "node tests/watch-test.js",
+    "test:report": "node tests/generate-report.js",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:portable": "electron-builder --win portable",
+    "build:nsis": "electron-builder --win nsis",
+    "dist": "npm run build:nsis",
+    "pack": "electron-builder --dir"
+  },
+  "keywords": [
+    "gif",
+    "animation",
+    "transparent",
+    "desktop-app",
+    "luna"
+  ],
+  "author": "茄子熊",
+  "license": "MIT",
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "playwright": "^1.55.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "chalk": "^4.1.2",
+    "chokidar": "^3.5.3",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.6.4",
+    "electron-packager": "^17.1.2",
+    "fs-extra": "^11.1.1",
+    "puppeteer": "^21.0.0"
+  },
+  "build": {
+    "appId": "com.luna.animation.desktop",
+    "productName": "璐娜的 GIF 動畫製作器",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "!node_modules/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "sign": false,
+      "verifyUpdateCodeSignature": false,
+      "publisherName": "Luna Animation",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "forceCodeSigning": false,
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "璐娜的 GIF 動畫製作器",
+      "runAfterFinish": true,
+      "artifactName": "璐娜GIF動畫製作器-安裝包-${version}.exe",
+      "differentialPackage": false
+    },
+    "portable": {
+      "artifactName": "璐娜GIF動畫製作器-便攜版-${version}.exe"
+    },
+    "asar": true,
+    "compression": "maximum"
+  }
+}

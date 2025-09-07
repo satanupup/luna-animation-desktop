@@ -1,0 +1,138 @@
+{
+  "testSuite": {
+    "name": "璐娜的 GIF 動畫製作器測試套件",
+    "version": "1.0.0",
+    "description": "全面的自動化測試解決方案",
+    "author": "茄子熊"
+  },
+  "timeouts": {
+    "default": 60000,
+    "ui": 60000,
+    "functionality": 90000,
+    "animation": 60000,
+    "ffmpeg": 120000,
+    "svg": 30000,
+    "performance": 60000,
+    "visual": 45000
+  },
+  "retries": {
+    "default": 1,
+    "flaky": 3
+  },
+  "reporting": {
+    "formats": ["html", "json", "markdown", "csv"],
+    "outputDir": "./reports",
+    "includeScreenshots": true,
+    "includePerformanceMetrics": true
+  },
+  "watch": {
+    "enabled": true,
+    "debounceDelay": 2000,
+    "patterns": [
+      "src/**/*.js",
+      "src/**/*.html",
+      "src/**/*.css",
+      "tests/**/*.js",
+      "*.json"
+    ],
+    "ignored": [
+      "node_modules/**",
+      "dist/**",
+      "reports/**",
+      "temp/**"
+    ]
+  },
+  "testCategories": {
+    "ui": {
+      "name": "UI 測試",
+      "priority": "high",
+      "parallel": false,
+      "tests": [
+        "ui-click-test.js",
+        "visual-regression-test.js"
+      ]
+    },
+    "functionality": {
+      "name": "功能測試",
+      "priority": "high",
+      "parallel": true,
+      "tests": [
+        "functionality-test.js",
+        "animation-test.js"
+      ]
+    },
+    "integration": {
+      "name": "集成測試",
+      "priority": "medium",
+      "parallel": true,
+      "tests": [
+        "ffmpeg-test.js",
+        "svg-test.js"
+      ]
+    },
+    "performance": {
+      "name": "性能測試",
+      "priority": "low",
+      "parallel": false,
+      "tests": [
+        "performance-test.js"
+      ]
+    }
+  },
+  "environment": {
+    "node": {
+      "minVersion": "14.0.0"
+    },
+    "platform": {
+      "supported": ["win32", "darwin", "linux"]
+    },
+    "dependencies": {
+      "required": [
+        "electron",
+        "chokidar",
+        "chalk",
+        "fs-extra"
+      ],
+      "optional": [
+        "@playwright/test",
+        "puppeteer"
+      ]
+    }
+  },
+  "performance": {
+    "benchmarks": {
+      "startupTime": 3000,
+      "memoryUsage": 100,
+      "renderTime": 16,
+      "frameRate": 15,
+      "fileGeneration": 100
+    },
+    "thresholds": {
+      "cpu": 50,
+      "memory": 200,
+      "disk": 80
+    }
+  },
+  "visual": {
+    "screenshotDir": "./screenshots",
+    "baselineDir": "./baselines",
+    "threshold": 0.1,
+    "viewports": [
+      { "width": 1024, "height": 768 },
+      { "width": 1280, "height": 720 },
+      { "width": 1920, "height": 1080 }
+    ]
+  },
+  "notifications": {
+    "enabled": true,
+    "onFailure": true,
+    "onSuccess": false,
+    "channels": ["console", "file"]
+  },
+  "debugging": {
+    "verbose": false,
+    "saveFailureScreenshots": true,
+    "saveFailureLogs": true,
+    "keepTempFiles": false
+  }
+}

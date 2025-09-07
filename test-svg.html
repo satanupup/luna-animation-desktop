@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG 動畫測試</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        svg {
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>SVG 動畫測試</h1>
+    
+    <div class="test-container">
+        <h3>彈跳圓形</h3>
+        <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="150" cy="100" r="20" fill="#ff3b30">
+                <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    values="0,0; 0,-60; 0,0"
+                    dur="1s"
+                    repeatCount="indefinite"
+                    calcMode="spline"
+                    keySplines="0.25 0.1 0.25 1; 0.25 0.1 0.25 1"
+                    keyTimes="0; 0.5; 1"/>
+            </circle>
+        </svg>
+    </div>
+
+    <div class="test-container">
+        <h3>脈衝正方形</h3>
+        <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+            <rect x="130" y="80" width="40" height="40" fill="#007bff">
+                <animateTransform
+                    attributeName="transform"
+                    type="scale"
+                    values="0.7; 1.3; 0.7"
+                    dur="1s"
+                    repeatCount="indefinite"
+                    transform-origin="150 100"/>
+            </rect>
+        </svg>
+    </div>
+
+    <div class="test-container">
+        <h3>旋轉箭頭</h3>
+        <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="130,90 170,90 170,80 190,100 170,120 170,110 130,110" fill="#28a745">
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    values="0 150 100; 360 150 100"
+                    dur="2s"
+                    repeatCount="indefinite"/>
+            </polygon>
+        </svg>
+    </div>
+
+    <div class="test-container">
+        <h3>空心星形 (淡入淡出)</h3>
+        <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="150,70 160,90 180,90 166,102 172,122 150,110 128,122 134,102 120,90 140,90" 
+                     fill="none" stroke="#ffc107" stroke-width="3">
+                <animate
+                    attributeName="opacity"
+                    values="0.3; 1; 0.3"
+                    dur="1.5s"
+                    repeatCount="indefinite"/>
+            </polygon>
+        </svg>
+    </div>
+
+    <script>
+        // 測試 SVG 動畫是否正常工作
+        console.log('SVG 動畫測試頁面已載入');
+        
+        // 檢查瀏覽器是否支援 SVG 動畫
+        const svgSupport = document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Animation", "1.1");
+        console.log('瀏覽器支援 SVG 動畫:', svgSupport);
+        
+        if (!svgSupport) {
+            document.body.insertAdjacentHTML('afterbegin', 
+                '<div style="background: #ffcccc; padding: 10px; margin: 10px 0; border-radius: 5px;">' +
+                '⚠️ 您的瀏覽器可能不完全支援 SVG 動畫功能' +
+                '</div>'
+            );
+        }
+    </script>
+</body>
+</html>

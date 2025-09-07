@@ -1,0 +1,103 @@
+{
+  "summary": {
+    "totalTests": 6,
+    "passed": 6,
+    "failed": 0,
+    "errors": 0,
+    "duration": 25
+  },
+  "analysis": {
+    "warnings": [],
+    "errors": [],
+    "suggestions": []
+  },
+  "results": [
+    {
+      "type": "SVG",
+      "name": "svg_circle_bounce",
+      "status": "PASS",
+      "details": {
+        "isValid": true,
+        "message": "7/7 檢查通過",
+        "checks": {
+          "hasXMLDeclaration": true,
+          "hasSVGTag": true,
+          "hasNamespace": true,
+          "hasTransparentBackground": true,
+          "hasShape": true,
+          "hasAnimation": true,
+          "correctSize": true
+        },
+        "score": 100
+      },
+      "file": "E:\\Tools\\FileAnalysis\\luna-animation-desktop\\tests\\test-outputs\\svg_circle_bounce.svg"
+    },
+    {
+      "type": "SVG",
+      "name": "svg_square_rotate",
+      "status": "PASS",
+      "details": {
+        "isValid": true,
+        "message": "7/7 檢查通過",
+        "checks": {
+          "hasXMLDeclaration": true,
+          "hasSVGTag": true,
+          "hasNamespace": true,
+          "hasTransparentBackground": true,
+          "hasShape": true,
+          "hasAnimation": true,
+          "correctSize": true
+        },
+        "score": 100
+      },
+      "file": "E:\\Tools\\FileAnalysis\\luna-animation-desktop\\tests\\test-outputs\\svg_square_rotate.svg"
+    },
+    {
+      "type": "GIF",
+      "name": "gif_validation",
+      "status": "PASS",
+      "details": {
+        "isValid": true,
+        "message": "3/3 檢查通過",
+        "checks": {
+          "fileExists": true,
+          "hasGIFSignature": true,
+          "sizeReasonable": true
+        },
+        "fileSize": 6
+      }
+    },
+    {
+      "type": "PNG",
+      "name": "png_frame_validation",
+      "status": "PASS",
+      "details": {
+        "isValid": true,
+        "message": "3/3 檢查通過",
+        "checks": {
+          "fileExists": true,
+          "hasPNGSignature": true,
+          "sizeReasonable": true
+        },
+        "fileSize": 108
+      }
+    },
+    {
+      "type": "FILESYSTEM",
+      "name": "file_operations",
+      "status": "PASS",
+      "details": {
+        "message": "檔案操作正常"
+      }
+    },
+    {
+      "type": "FFMPEG",
+      "name": "ffmpeg_availability",
+      "status": "PASS",
+      "details": {
+        "message": "FFmpeg 可用",
+        "path": "E:\\Tools\\FileAnalysis\\luna-animation-desktop\\ffmpeg-master-latest-win64-gpl-shared\\bin\\ffmpeg.exe"
+      }
+    }
+  ]
+}
