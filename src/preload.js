@@ -39,6 +39,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // 輸出管理器
   output: {
     saveGIF: (buffer, animationType, shape) => ipcRenderer.invoke('output-save-gif', buffer, animationType, shape),
+    saveGIFFromFile: (sourceFilePath, animationType, shape) => ipcRenderer.invoke('output-save-gif-from-file', sourceFilePath, animationType, shape),
     saveSVG: (svgContent, animationType, shape) => ipcRenderer.invoke('output-save-svg', svgContent, animationType, shape),
     savePNGFrames: (frames, animationType, shape) => ipcRenderer.invoke('output-save-png-frames', frames, animationType, shape),
     openFolder: (subFolder) => ipcRenderer.invoke('output-open-folder', subFolder),

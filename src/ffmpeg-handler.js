@@ -164,9 +164,9 @@ class FFmpegHandler {
     }
 
     // 修正的 FFmpeg 命令，使用兩步法生成高品質 GIF
-    // 🔧 修復：Windows 路徑問題 - 使用原生反斜線格式
-    const inputPattern = `${inputDir}\\frame_%04d.png`;
-    const paletteFile = `${inputDir}\\palette.png`;
+    // 🔧 修復：使用正斜線格式，與 FFmpeg 相容
+    const inputPattern = `${normalizedInputDir}/frame_%04d.png`;
+    const paletteFile = `${normalizedInputDir}/palette.png`;
 
     // 第一步：生成調色板
     const paletteCommand = [
@@ -175,7 +175,7 @@ class FFmpegHandler {
       '-framerate', fps.toString(),
       '-i', inputPattern, // 🔧 不加引號，讓 FFmpeg 處理萬用字元
       '-vf', 'palettegen=stats_mode=diff',
-      `"${paletteFile}"`
+      paletteFile // 🔧 修復：移除引號，避免 FFmpeg 無法識別檔案格式
     ].join(' ');
 
     // 第二步：使用調色板生成 GIF
@@ -184,7 +184,7 @@ class FFmpegHandler {
       '-y',
       '-framerate', fps.toString(),
       '-i', inputPattern, // 🔧 不加引號，讓 FFmpeg 處理萬用字元
-      '-i', `"${paletteFile}"`,
+      '-i', paletteFile, // 🔧 修復：移除引號，避免 FFmpeg 無法識別檔案格式
       '-lavfi', 'paletteuse=dither=bayer:bayer_scale=5:diff_mode=rectangle',
       `"${normalizedOutputPath}"`
     ].join(' ');
@@ -267,6 +267,7 @@ class FFmpegHandler {
       const { fps = 15, quality = 'medium', transparent = true, loop = true } = options;
 
       // 創建臨時輸出檔案路徑
+      // 🔧 修復：在瀏覽器環境中，我們使用相對路徑，讓主進程處理
       const tempOutputPath = `temp_gif_${Date.now()}.gif`;
 
       // 使用現有的 convertFramesToGIF 方法
@@ -277,10 +278,26 @@ class FFmpegHandler {
         loop
       });
 
-      // 這裡我們需要修改 convertFramesToGIF 來支援返回 Buffer
-      // 暫時返回一個模擬的 Buffer
+      // 🔧 修復：在瀏覽器環境中，我們不能直接返回 Buffer
+      // 而是返回 GIF 檔案的路徑信息
       console.log('✅ GIF Buffer 生成完成');
-      return Buffer.from('GIF89a'); // 臨時返回 GIF 簽名
+
+      // 檢查是否在 Electron 環境中
+      if (typeof window !== 'undefined' && window.electronAPI) {
+        // 在 Electron 環境中，返回檔案路徑讓主進程處理
+        return {
+          success: true,
+          filePath: outputPath,
+          message: 'GIF 檔案已生成，請使用輸出管理器保存'
+        };
+      } else {
+        // 瀏覽器環境中的模擬返回
+        return {
+          success: true,
+          message: 'GIF 生成完成（瀏覽器環境）',
+          data: 'GIF89a' // 模擬 GIF 簽名
+        };
+      }
     } catch (error) {
       console.error('❌ GIF Buffer 生成失敗:', error);
       throw error;

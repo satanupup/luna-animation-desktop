@@ -4,6 +4,44 @@ const fs = require('fs');
 const os = require('os');
 const { spawn } = require('child_process');
 const Store = require('electron-store');
+
+// 智能命令分割函數，正確處理引號
+function parseCommand(command) {
+  const args = [];
+  let current = '';
+  let inQuotes = false;
+  let quoteChar = '';
+
+  for (let i = 0; i < command.length; i++) {
+    const char = command[i];
+
+    if ((char === '"' || char === "'") && !inQuotes) {
+      // 開始引號
+      inQuotes = true;
+      quoteChar = char;
+    } else if (char === quoteChar && inQuotes) {
+      // 結束引號
+      inQuotes = false;
+      quoteChar = '';
+    } else if (char === ' ' && !inQuotes) {
+      // 空格且不在引號內，分割參數
+      if (current.trim()) {
+        args.push(current.trim());
+        current = '';
+      }
+    } else {
+      // 普通字符
+      current += char;
+    }
+  }
+
+  // 添加最後一個參數
+  if (current.trim()) {
+    args.push(current.trim());
+  }
+
+  return args;
+}
 const OutputManager = require('./output-manager');
 
 // 應用程式配置
@@ -484,10 +522,20 @@ ipcMain.handle('ffmpeg-run-command', async (_event, command) => {
 
     return { success: true, message: '複合命令執行完成' };
   } else {
-    // 單一命令處理
-    const args = command.split(' ').filter(arg => arg.trim() !== '');
+    // 單一命令處理 - 智能分割命令，正確處理引號
+    const args = parseCommand(command);
     const ffmpegPath = args[0].replace(/"/g, '');
-    const ffmpegArgs = args.slice(1);
+    let ffmpegArgs = args.slice(1);
+
+    // 🔧 修復：處理相對路徑的輸出檔案，轉換為絕對路徑
+    for (let i = 0; i < ffmpegArgs.length; i++) {
+      const arg = ffmpegArgs[i];
+      if (arg.startsWith('temp_gif_') && arg.endsWith('.gif')) {
+        // 將相對路徑轉換為絕對路徑
+        ffmpegArgs[i] = path.join(process.cwd(), arg);
+        console.log(`🔧 輸出路徑轉換: ${arg} -> ${ffmpegArgs[i]}`);
+      }
+    }
 
     return new Promise((resolve, reject) => {
       const childProcess = spawn(ffmpegPath, ffmpegArgs, {
@@ -564,6 +612,34 @@ ipcMain.handle('output-save-gif', async (_event, buffer, animationType, shape) =
     return result;
   } catch (error) {
     throw new Error(`保存 GIF 失敗: ${error.message}`);
+  }
+});
+
+// 新增：從已生成的檔案保存 GIF
+ipcMain.handle('output-save-gif-from-file', async (_event, sourceFilePath, animationType, shape) => {
+  try {
+    const outputDir = path.join(os.homedir(), 'Luna-Animations', 'GIF');
+    await fs.promises.mkdir(outputDir, { recursive: true });
+
+    const filename = `luna-animation-${shape}-${animationType}-${Date.now()}.gif`;
+    const targetFilePath = path.join(outputDir, filename);
+
+    // 複製檔案到輸出目錄
+    await fs.promises.copyFile(sourceFilePath, targetFilePath);
+    const stats = await fs.promises.stat(targetFilePath);
+
+    // 清理臨時檔案
+    try {
+      await fs.promises.unlink(sourceFilePath);
+      console.log(`✅ 臨時檔案已清理: ${sourceFilePath}`);
+    } catch (cleanupError) {
+      console.warn('清理臨時檔案失敗:', cleanupError);
+    }
+
+    return { success: true, filename, path: targetFilePath, size: stats.size };
+  } catch (error) {
+    console.error('從檔案保存 GIF 失敗:', error);
+    return { success: false, error: error.message };
   }
 });
 

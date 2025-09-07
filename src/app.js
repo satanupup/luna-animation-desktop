@@ -569,20 +569,28 @@ class LunaAnimationApp {
 
       this.updateProgress(75, '正在轉換為 GIF...');
 
-      // 使用 FFmpeg 生成 GIF 並通過輸出管理器保存
-      const gifBuffer = await ffmpegHandler.generateGIFBuffer(frames, {
+      // 使用 FFmpeg 生成 GIF
+      const gifResult = await ffmpegHandler.generateGIFBuffer(frames, {
         fps: this.params.fps,
         quality: this.params.quality,
         transparent: this.params.transparent,
         loop: this.params.loop
       });
 
-      // 使用輸出管理器保存 GIF
-      const saveResult = await window.electronAPI.output.saveGIF(
-        gifBuffer,
-        this.params.animationType,
-        this.params.shape
-      );
+      let saveResult;
+      if (gifResult.success && gifResult.filePath) {
+        // 🔧 修復：FFmpeg 已經生成了檔案，我們需要移動它到輸出目錄
+        // 使用輸出管理器處理已生成的 GIF 檔案
+        saveResult = await window.electronAPI.output.saveGIFFromFile(
+          gifResult.filePath,
+          this.params.animationType,
+          this.params.shape
+        );
+      } else {
+        // 瀏覽器環境或其他情況的處理
+        this.showStatus('❌ GIF 生成失敗：不支援的環境', 'error');
+        return;
+      }
 
       if (saveResult.success) {
         this.updateProgress(100, '完成！');
