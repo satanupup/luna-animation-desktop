@@ -284,10 +284,11 @@ class FFmpegHandler {
 
       // 檢查是否在 Electron 環境中
       if (typeof window !== 'undefined' && window.electronAPI) {
-        // 在 Electron 環境中，返回檔案路徑讓主進程處理
+        // 🔧 修復：返回絕對路徑，因為 FFmpeg 將檔案保存到應用程式根目錄
+        const absolutePath = await window.electronAPI.path.join(await window.electronAPI.path.getCwd(), tempOutputPath);
         return {
           success: true,
-          filePath: tempOutputPath,
+          filePath: absolutePath,
           message: 'GIF 檔案已生成，請使用輸出管理器保存'
         };
       } else {

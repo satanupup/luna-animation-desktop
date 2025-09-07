@@ -615,6 +615,15 @@ ipcMain.handle('output-save-gif', async (_event, buffer, animationType, shape) =
   }
 });
 
+// 路徑工具 IPC 處理器
+ipcMain.handle('path-join', async (_event, ...paths) => {
+  return path.join(...paths);
+});
+
+ipcMain.handle('path-get-cwd', async (_event) => {
+  return process.cwd();
+});
+
 // 新增：從已生成的檔案保存 GIF
 ipcMain.handle('output-save-gif-from-file', async (_event, sourceFilePath, animationType, shape) => {
   try {

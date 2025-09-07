@@ -47,6 +47,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
     getStats: () => ipcRenderer.invoke('output-get-stats')
   },
 
+  // 路徑工具
+  path: {
+    join: (...paths) => ipcRenderer.invoke('path-join', ...paths),
+    getCwd: () => ipcRenderer.invoke('path-get-cwd')
+  },
+
   // 移除監聽器
   removeAllListeners: (channel) => {
     ipcRenderer.removeAllListeners(channel);
