@@ -3,7 +3,6 @@ console.log('🔍 檢查類別載入狀態:');
 console.log('- CircleAnimationEngine:', typeof CircleAnimationEngine !== 'undefined' ? '✅' : '❌');
 console.log('- FrameGenerator:', typeof FrameGenerator !== 'undefined' ? '✅' : '❌');
 console.log('- FFmpegHandler:', typeof FFmpegHandler !== 'undefined' ? '✅' : '❌');
-console.log('- SVGHandler:', typeof SVGHandler !== 'undefined' ? '✅' : '❌');
 
 // 主應用程式邏輯
 class LunaAnimationApp {
@@ -79,7 +78,6 @@ class LunaAnimationApp {
 
     // 延遲初始化 FFmpegHandler，確保類別已載入
     this.ffmpegHandler = null;
-    this.svgHandler = new SVGHandler();
   }
 
   // 確保 FFmpegHandler 已初始化
@@ -416,9 +414,6 @@ class LunaAnimationApp {
     } else if (method === 'ffmpeg') {
       this.methodDesc.textContent = '使用 FFmpeg 直接生成透明背景 GIF 檔案，一鍵完成！';
       this.generateBtn.textContent = '🎯 直接生成 GIF';
-    } else if (method === 'svg') {
-      this.methodDesc.textContent = '生成 SVG 向量動畫檔案，支援無限縮放，適合網頁和影片編輯軟體';
-      this.generateBtn.textContent = '🎯 生成 SVG 動畫';
     }
   }
 
@@ -435,8 +430,6 @@ class LunaAnimationApp {
         await this.generateFrames();
       } else if (this.params.method === 'ffmpeg') {
         await this.generateGIFWithFFmpeg();
-      } else if (this.params.method === 'svg') {
-        await this.generateSVGAnimation();
       }
 
       // 🔧 記錄性能指標
@@ -639,111 +632,7 @@ class LunaAnimationApp {
     }
   }
 
-  // 生成 SVG 動畫
-  async generateSVGAnimation() {
-    this.isGenerating = true;
-    this.generateBtn.disabled = true;
-    this.generateBtn.textContent = '⏳ 正在生成 SVG...';
-    this.showProgress(true);
 
-    try {
-      this.showStatus('正在生成 SVG 動畫...', 'working');
-
-      this.updateProgress(50, '生成 SVG 結構...');
-
-      // 生成 SVG 動畫
-      const svg = this.svgHandler.generateSVGAnimation(this.params);
-
-      this.updateProgress(75, '保存檔案...');
-
-      // 🔧 修復：將 SVG DOM 元素轉換為字串再傳遞給 IPC
-      // 避免 "An object could not be cloned" 錯誤
-      const svgString = this.svgHandler.getSVGString(svg);
-
-      // 🔧 檢查 electronAPI 是否可用
-      let saveResult;
-      if (window.electronAPI && window.electronAPI.output) {
-        // 使用輸出管理器保存 SVG
-        saveResult = await window.electronAPI.output.saveSVG(
-          svgString,
-          this.params.animationType,
-          this.params.shape
-        );
-      } else {
-        // 瀏覽器環境下的備用方案
-        console.log('🌐 瀏覽器環境，使用備用 SVG 保存方案');
-        saveResult = this.saveSVGInBrowser(svgString);
-      }
-
-      if (saveResult.success) {
-        this.updateProgress(100, '完成！');
-        this.showStatus('✅ SVG 動畫生成完成！', 'success');
-
-        // 🔧 檢查是否在 Electron 環境中
-        if (window.electronAPI && window.electronAPI.showMessageBox) {
-          // 顯示成功對話框並提供選項
-          const result = await window.electronAPI.showMessageBox({
-            type: 'info',
-            buttons: ['開啟檔案', '開啟資料夾', '關閉'],
-            defaultId: 0,
-            message: '🎉 SVG 動畫生成成功！',
-            detail: `檔案名稱: ${saveResult.filename}\n檔案大小: ${(saveResult.size / 1024).toFixed(1)} KB\n儲存位置: Luna-Animations/SVG/\n\n選擇您要執行的動作：`
-          });
-
-          if (result.response === 0) {
-            // 開啟檔案
-            await window.electronAPI.output.openFile(saveResult.path);
-          } else if (result.response === 1) {
-            // 開啟 SVG 資料夾
-            await window.electronAPI.output.openFolder('SVG');
-          }
-        } else {
-          // 瀏覽器環境下的簡化提示
-          console.log('🎉 SVG 動畫生成成功！');
-          if (saveResult.filename) {
-            console.log(`檔案名稱: ${saveResult.filename}`);
-          }
-        }
-      } else {
-        this.showStatus('❌ 保存 SVG 失敗', 'error');
-      }
-
-    } catch (error) {
-      console.error('SVG 生成失敗:', error);
-      this.showStatus(`❌ 生成 SVG 時發生錯誤: ${error.message}`, 'error');
-    } finally {
-      // 重置狀態
-      setTimeout(() => {
-        this.isGenerating = false;
-        this.generateBtn.disabled = false;
-        this.generateBtn.textContent = '🎯 生成 SVG 動畫';
-        this.showProgress(false);
-      }, 3000);
-    }
-  }
-
-  // 瀏覽器環境下的 SVG 保存方案
-  saveSVGInBrowser(svgString) {
-    try {
-      // 創建下載連結
-      const blob = new Blob([svgString], { type: 'image/svg+xml' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `luna-animation-${this.params.shape}-${this.params.animationType || 'bounce'}.svg`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-
-      this.showStatus('✅ SVG 動畫已下載', 'success');
-      return { success: true, message: 'SVG 已下載' };
-    } catch (error) {
-      console.error('❌ 瀏覽器 SVG 保存失敗:', error);
-      this.showStatus('❌ SVG 保存失敗: ' + error.message, 'error');
-      return { success: false, error: error.message };
-    }
-  }
 
   // 瀏覽器環境下的 PNG 幀保存方案
   savePNGFramesInBrowser(frames) {
