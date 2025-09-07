@@ -57,24 +57,9 @@ function fixFrameGenerator() {
   return true;
 }
 
-// 修復 SVGHandler 的 downloadSVG 方法
+// SVG 功能已移除，跳過修復
 function fixSVGHandler() {
-  console.log('🔧 修復 SVGHandler...');
-
-  if (typeof window.SVGHandler === 'undefined') {
-    console.error('❌ SVGHandler 不存在');
-    return false;
-  }
-
-  // 覆蓋 downloadSVG 方法
-  window.SVGHandler.prototype.downloadSVG = function(svg, filename) {
-    console.warn('🚨 緊急修復：阻止 downloadSVG 下載');
-    const svgString = this.svgToString(svg);
-    console.log('SVG 內容已生成，但未下載。請使用輸出管理器。');
-    return svgString;
-  };
-
-  console.log('✅ SVGHandler 修復完成');
+  console.log('ℹ️ SVG 功能已移除，跳過 SVGHandler 修復');
   return true;
 }
 

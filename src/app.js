@@ -1,8 +1,10 @@
-// 檢查必要的類別是否已載入
-console.log('🔍 檢查類別載入狀態:');
-console.log('- CircleAnimationEngine:', typeof CircleAnimationEngine !== 'undefined' ? '✅' : '❌');
-console.log('- FrameGenerator:', typeof FrameGenerator !== 'undefined' ? '✅' : '❌');
-console.log('- FFmpegHandler:', typeof FFmpegHandler !== 'undefined' ? '✅' : '❌');
+// 檢查必要的類別是否已載入（延遲檢查）
+setTimeout(() => {
+  console.log('🔍 檢查類別載入狀態:');
+  console.log('- CircleAnimationEngine:', typeof CircleAnimationEngine !== 'undefined' ? '✅' : '❌');
+  console.log('- FrameGenerator:', typeof FrameGenerator !== 'undefined' ? '✅' : '❌');
+  console.log('- FFmpegHandler:', typeof FFmpegHandler !== 'undefined' ? '✅' : '❌');
+}, 50);
 
 // 主應用程式邏輯
 class LunaAnimationApp {
