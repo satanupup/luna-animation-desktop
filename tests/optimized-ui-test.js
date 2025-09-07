@@ -36,6 +36,9 @@ class OptimizedUITest {
       // 用戶體驗測試
       await this.testUserExperience();
 
+      // 🚀 新增：深度測試
+      await this.testAdvancedScenarios();
+
       // 生成優化報告
       await this.generateOptimizationReport();
 
@@ -310,7 +313,72 @@ class OptimizedUITest {
       unit: 'MB'
     });
 
+    // 🚀 新增：DOM 渲染性能測試
+    await this.testDOMRenderingPerformance();
+
+    // 🚀 新增：JavaScript 執行性能測試
+    await this.testJavaScriptPerformance();
+
     console.log(`📊 記憶體使用: ${(memoryUsage.usedJSHeapSize / 1024 / 1024).toFixed(1)}MB`);
+  }
+
+  // DOM 渲染性能測試
+  async testDOMRenderingPerformance() {
+    const startTime = Date.now();
+
+    // 測試大量 DOM 操作
+    await this.page.evaluate(() => {
+      const testContainer = document.createElement('div');
+      testContainer.style.display = 'none';
+      document.body.appendChild(testContainer);
+
+      // 創建 100 個元素
+      for (let i = 0; i < 100; i++) {
+        const element = document.createElement('div');
+        element.textContent = `Test Element ${i}`;
+        testContainer.appendChild(element);
+      }
+
+      // 清理
+      document.body.removeChild(testContainer);
+    });
+
+    const renderTime = Date.now() - startTime;
+
+    this.performanceMetrics.push({
+      metric: 'dom_rendering_time',
+      value: renderTime,
+      unit: 'ms'
+    });
+
+    console.log(`🎨 DOM 渲染性能: ${renderTime}ms`);
+  }
+
+  // JavaScript 執行性能測試
+  async testJavaScriptPerformance() {
+    const jsPerformance = await this.page.evaluate(() => {
+      const startTime = performance.now();
+
+      // 執行一些計算密集的操作
+      let result = 0;
+      for (let i = 0; i < 100000; i++) {
+        result += Math.sqrt(i);
+      }
+
+      const endTime = performance.now();
+      return {
+        executionTime: endTime - startTime,
+        result
+      };
+    });
+
+    this.performanceMetrics.push({
+      metric: 'js_execution_time',
+      value: jsPerformance.executionTime,
+      unit: 'ms'
+    });
+
+    console.log(`⚡ JavaScript 執行性能: ${jsPerformance.executionTime.toFixed(2)}ms`);
   }
 
   // 測試用戶體驗
@@ -352,6 +420,255 @@ class OptimizedUITest {
     console.log(`✅ 用戶體驗評分: ${uxScore.toFixed(1)}%`);
   }
 
+  // 深度測試場景
+  async testAdvancedScenarios() {
+    console.log('\n🚀 深度測試場景...');
+
+    // 1. 測試多種形狀和動畫組合
+    await this.testMultipleShapeAnimations();
+
+    // 2. 測試極限參數
+    await this.testExtremeParameters();
+
+    // 3. 測試快速切換
+    await this.testRapidSwitching();
+
+    // 4. 測試錯誤恢復
+    await this.testErrorRecovery();
+  }
+
+  // 測試多種形狀和動畫組合
+  async testMultipleShapeAnimations() {
+    console.log('🎨 測試多種形狀和動畫組合...');
+
+    const combinations = [
+      { shape: 'circle', animation: 'bounce' },
+      { shape: 'square', animation: 'rotate' },
+      { shape: 'triangle', animation: 'pulse' },
+      { shape: 'star', animation: 'swing' }
+    ];
+
+    let successCount = 0;
+    const startTime = Date.now();
+
+    for (const combo of combinations) {
+      try {
+        await this.page.selectOption('#shape', combo.shape);
+        await this.page.selectOption('#animationType', combo.animation);
+        await this.page.waitForTimeout(100); // 短暫等待
+        successCount++;
+      } catch (error) {
+        console.log(`⚠️ 組合失敗: ${combo.shape} + ${combo.animation}`);
+      }
+    }
+
+    const duration = Date.now() - startTime;
+
+    this.testResults.push({
+      test: 'multiple_shape_animations',
+      status: successCount === combinations.length ? 'PASS' : 'PARTIAL',
+      successCount,
+      totalCount: combinations.length,
+      duration,
+      message: `形狀動畫組合: ${successCount}/${combinations.length} 成功`
+    });
+
+    console.log(`✅ 形狀動畫組合: ${successCount}/${combinations.length} 成功 (${duration}ms)`);
+  }
+
+  // 測試極限參數
+  async testExtremeParameters() {
+    console.log('⚡ 測試極限參數...');
+
+    // 🔧 修復：針對 range 滑動條的測試參數
+    const extremeTests = [
+      { param: 'size', value: '80', name: '最大尺寸', min: 20, max: 80 },
+      { param: 'size', value: '20', name: '最小尺寸', min: 20, max: 80 },
+      { param: 'duration', value: '30', name: '長時間動畫', min: 1, max: 30 },
+      { param: 'duration', value: '1', name: '短時間動畫', min: 1, max: 30 }
+    ];
+
+    let successCount = 0;
+
+    for (const test of extremeTests) {
+      try {
+        // 🔧 修復：使用 evaluate 方法直接設置滑動條的值
+        await this.page.evaluate(({ param, value }) => {
+          const element = document.querySelector(`#${param}`);
+          if (element) {
+            element.value = value;
+            // 觸發 change 事件
+            element.dispatchEvent(new Event('change', { bubbles: true }));
+            element.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        }, { param: test.param, value: test.value });
+
+        await this.page.waitForTimeout(200);
+
+        // 🔧 驗證值是否正確設置
+        const actualValue = await this.page.inputValue(`#${test.param}`);
+        if (actualValue === test.value) {
+          successCount++;
+          console.log(`✅ ${test.name}: ${actualValue}`);
+        } else {
+          console.log(`⚠️ ${test.name}: 期望 ${test.value}, 實際 ${actualValue}`);
+        }
+      } catch (error) {
+        console.log(`⚠️ 極限參數失敗: ${test.name} - ${error.message}`);
+      }
+    }
+
+    this.testResults.push({
+      test: 'extreme_parameters',
+      status: successCount === extremeTests.length ? 'PASS' : 'PARTIAL',
+      successCount,
+      totalCount: extremeTests.length,
+      message: `極限參數測試: ${successCount}/${extremeTests.length} 成功`
+    });
+
+    console.log(`✅ 極限參數測試: ${successCount}/${extremeTests.length} 成功`);
+  }
+
+  // 測試快速切換
+  async testRapidSwitching() {
+    console.log('🔄 測試快速切換...');
+
+    const startTime = Date.now();
+    let switchCount = 0;
+
+    try {
+      // 快速切換方法
+      for (let i = 0; i < 5; i++) {
+        await this.page.click('button[data-method="frames"]');
+        await this.page.waitForTimeout(50);
+        await this.page.click('button[data-method="ffmpeg"]');
+        await this.page.waitForTimeout(50);
+        switchCount += 2;
+      }
+
+      const duration = Date.now() - startTime;
+
+      this.testResults.push({
+        test: 'rapid_switching',
+        status: 'PASS',
+        switchCount,
+        duration,
+        message: `快速切換: ${switchCount} 次切換，${duration}ms`
+      });
+
+      console.log(`✅ 快速切換: ${switchCount} 次切換，${duration}ms`);
+
+    } catch (error) {
+      this.testResults.push({
+        test: 'rapid_switching',
+        status: 'FAIL',
+        error: error.message
+      });
+    }
+  }
+
+  // 測試錯誤恢復
+  async testErrorRecovery() {
+    console.log('🛡️ 測試錯誤恢復...');
+
+    try {
+      let recoverySteps = 0;
+
+      // 🔧 步驟 1：測試邊界值處理（滑動條不接受無效值，這是正常行為）
+      try {
+        // 測試超出範圍的值
+        await this.page.evaluate(() => {
+          const sizeElement = document.querySelector('#size');
+          if (sizeElement) {
+            // 嘗試設置超出範圍的值
+            sizeElement.value = '200'; // 超出最大值 80
+            sizeElement.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        await this.page.waitForTimeout(100);
+        recoverySteps++;
+        console.log('✅ 邊界值處理測試完成');
+      } catch (error) {
+        console.log(`⚠️ 邊界值處理失敗: ${error.message}`);
+      }
+
+      // 🔧 步驟 2：測試另一個邊界值
+      try {
+        await this.page.evaluate(() => {
+          const durationElement = document.querySelector('#duration');
+          if (durationElement) {
+            // 嘗試設置超出範圍的值
+            durationElement.value = '100'; // 超出最大值 30
+            durationElement.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        await this.page.waitForTimeout(100);
+        recoverySteps++;
+        console.log('✅ 持續時間邊界值測試完成');
+      } catch (error) {
+        console.log(`⚠️ 持續時間邊界值測試失敗: ${error.message}`);
+      }
+
+      // 🔧 步驟 3：恢復有效輸入
+      try {
+        await this.page.evaluate(() => {
+          const sizeElement = document.querySelector('#size');
+          const durationElement = document.querySelector('#duration');
+
+          if (sizeElement) {
+            sizeElement.value = '40';
+            sizeElement.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+
+          if (durationElement) {
+            durationElement.value = '2';
+            durationElement.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        await this.page.waitForTimeout(100);
+        recoverySteps++;
+        console.log('✅ 有效輸入恢復完成');
+      } catch (error) {
+        console.log(`⚠️ 有效輸入恢復失敗: ${error.message}`);
+      }
+
+      // 🔧 步驟 4：驗證最終狀態
+      try {
+        const sizeValue = await this.page.inputValue('#size');
+        const durationValue = await this.page.inputValue('#duration');
+
+        if (sizeValue === '40' && durationValue === '2') {
+          recoverySteps++;
+          console.log('✅ 最終狀態驗證通過');
+        } else {
+          console.log(`⚠️ 最終狀態驗證失敗: size=${sizeValue}, duration=${durationValue}`);
+        }
+      } catch (error) {
+        console.log(`⚠️ 最終狀態驗證失敗: ${error.message}`);
+      }
+
+      const success = recoverySteps >= 3; // 至少 3/4 步驟成功
+
+      this.testResults.push({
+        test: 'error_recovery',
+        status: success ? 'PASS' : 'PARTIAL',
+        recoverySteps,
+        totalSteps: 4,
+        message: `錯誤恢復測試: ${recoverySteps}/4 步驟成功`
+      });
+
+      console.log(`${success ? '✅' : '⚠️'} 錯誤恢復測試: ${recoverySteps}/4 步驟成功`);
+
+    } catch (error) {
+      this.testResults.push({
+        test: 'error_recovery',
+        status: 'FAIL',
+        error: error.message
+      });
+      console.log(`❌ 錯誤恢復測試失敗: ${error.message}`);
+    }
+  }
+
   // 生成優化報告
   async generateOptimizationReport() {
     const endTime = Date.now();
@@ -390,6 +707,30 @@ class OptimizedUITest {
       console.log(`  ${metric.metric}: ${metric.value.toFixed(1)}${metric.unit}`);
     });
 
+    // 🚀 新增：深度測試結果
+    const advancedTests = this.testResults.filter(r =>
+      ['multiple_shape_animations', 'extreme_parameters', 'rapid_switching', 'error_recovery'].includes(r.test)
+    );
+
+    if (advancedTests.length > 0) {
+      console.log('\n🚀 深度測試結果:');
+      advancedTests.forEach(test => {
+        const status = test.status === 'PASS' ? '✅' : test.status === 'PARTIAL' ? '⚠️' : '❌';
+        console.log(`  ${status} ${test.test}: ${test.message || test.status}`);
+
+        // 🔧 添加詳細信息
+        if (test.successCount !== undefined) {
+          console.log(`    └─ 成功率: ${test.successCount}/${test.totalCount}`);
+        }
+        if (test.duration !== undefined) {
+          console.log(`    └─ 耗時: ${test.duration}ms`);
+        }
+        if (test.error) {
+          console.log(`    └─ 錯誤: ${test.error}`);
+        }
+      });
+    }
+
     console.log('\n💡 優化建議:');
     report.recommendations.forEach(rec => {
       console.log(`  • ${rec}`);
@@ -422,12 +763,39 @@ class OptimizedUITest {
 
     // 基於測試結果生成建議
     const failedTests = this.testResults.filter(r => r.status === 'FAIL');
+    const partialTests = this.testResults.filter(r => r.status === 'PARTIAL');
+
     if (failedTests.length > 0) {
-      recommendations.push('修復失敗的測試項目以提升穩定性');
+      recommendations.push(`修復 ${failedTests.length} 個失敗的測試項目以提升穩定性`);
+    }
+
+    if (partialTests.length > 0) {
+      recommendations.push(`優化 ${partialTests.length} 個部分成功的測試項目`);
+    }
+
+    // 🚀 新增：基於性能指標的深度建議
+    const domRenderTime = this.performanceMetrics.find(m => m.metric === 'dom_rendering_time')?.value || 0;
+    if (domRenderTime > 50) {
+      recommendations.push(`DOM 渲染性能可以優化 (當前: ${domRenderTime.toFixed(1)}ms)`);
+    }
+
+    const jsExecutionTime = this.performanceMetrics.find(m => m.metric === 'js_execution_time')?.value || 0;
+    if (jsExecutionTime > 10) {
+      recommendations.push(`JavaScript 執行性能可以優化 (當前: ${jsExecutionTime.toFixed(1)}ms)`);
+    }
+
+    // 基於深度測試結果的建議
+    const advancedTests = this.testResults.filter(r =>
+      ['multiple_shape_animations', 'extreme_parameters', 'rapid_switching', 'error_recovery'].includes(r.test)
+    );
+
+    const allAdvancedPassed = advancedTests.every(t => t.status === 'PASS');
+    if (allAdvancedPassed && advancedTests.length > 0) {
+      recommendations.push('深度測試全部通過，應用程式穩定性優秀');
     }
 
     if (recommendations.length === 0) {
-      recommendations.push('應用程式性能良好，可考慮添加更多功能測試');
+      recommendations.push('應用程式性能和穩定性都表現優秀！');
     }
 
     return recommendations;

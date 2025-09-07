@@ -1,39 +1,49 @@
 {
   "summary": {
-    "totalTests": 4,
-    "passed": 4,
+    "totalTests": 8,
+    "passed": 8,
     "failed": 0,
     "errors": 0,
-    "duration": 13534,
+    "duration": 20198,
     "successRate": 100
   },
   "performance": [
     {
       "metric": "page_load_time",
-      "value": 2692,
+      "value": 2639,
       "unit": "ms"
     },
     {
       "metric": "frame_generation_time",
-      "value": 2269,
+      "value": 2311,
       "unit": "ms"
     },
     {
       "metric": "ui_response_time",
-      "value": 217.6,
+      "value": 222.4,
       "unit": "ms"
     },
     {
       "metric": "memory_usage",
       "value": 9.5367431640625,
       "unit": "MB"
+    },
+    {
+      "metric": "dom_rendering_time",
+      "value": 4,
+      "unit": "ms"
+    },
+    {
+      "metric": "js_execution_time",
+      "value": 3.199999988079071,
+      "unit": "ms"
     }
   ],
   "results": [
     {
       "test": "frame_sequence_generation",
       "status": "PASS",
-      "duration": 2269,
+      "duration": 2311,
       "message": "✅ PNG 幀序列生成完成！"
     },
     {
@@ -45,17 +55,47 @@
     {
       "test": "ui_responsiveness",
       "status": "PASS",
-      "avgResponseTime": 217.6,
-      "message": "平均響應時間: 217.6ms (良好)"
+      "avgResponseTime": 222.4,
+      "message": "平均響應時間: 222.4ms (良好)"
     },
     {
       "test": "user_experience",
       "status": "PASS",
       "score": 100,
       "message": "UI 完整性: 100.0%"
+    },
+    {
+      "test": "multiple_shape_animations",
+      "status": "PASS",
+      "successCount": 4,
+      "totalCount": 4,
+      "duration": 2208,
+      "message": "形狀動畫組合: 4/4 成功"
+    },
+    {
+      "test": "extreme_parameters",
+      "status": "PASS",
+      "successCount": 4,
+      "totalCount": 4,
+      "message": "極限參數測試: 4/4 成功"
+    },
+    {
+      "test": "rapid_switching",
+      "status": "PASS",
+      "switchCount": 10,
+      "duration": 3446,
+      "message": "快速切換: 10 次切換，3446ms"
+    },
+    {
+      "test": "error_recovery",
+      "status": "PASS",
+      "recoverySteps": 4,
+      "totalSteps": 4,
+      "message": "錯誤恢復測試: 4/4 步驟成功"
     }
   ],
   "recommendations": [
-    "UI 響應時間表現良好 (當前: 217.6ms)"
+    "UI 響應時間表現良好 (當前: 222.4ms)",
+    "深度測試全部通過，應用程式穩定性優秀"
   ]
 }
