@@ -68,7 +68,7 @@ class FFmpegHandler {
       await this.saveFramesToTemp(frames, tempDir);
 
       // 構建 FFmpeg 命令
-      const commands = this.buildFFmpegCommand(tempDir, outputPath, {
+      const commands = await this.buildFFmpegCommand(tempDir, outputPath, {
         fps,
         quality,
         transparent,
@@ -131,7 +131,7 @@ class FFmpegHandler {
   }
 
   // 構建 FFmpeg 命令
-  buildFFmpegCommand(inputDir, outputPath, options) {
+  async buildFFmpegCommand(inputDir, outputPath, options) {
     const { fps, quality, transparent, loop } = options;
 
     // 🔧 修復路徑格式：在 Windows 上，對於萬用字元路徑，保持反斜線
