@@ -1,8 +1,16 @@
+// 檢查必要的類別是否已載入
+console.log('🔍 檢查類別載入狀態:');
+console.log('- CircleAnimationEngine:', typeof CircleAnimationEngine !== 'undefined' ? '✅' : '❌');
+console.log('- FrameGenerator:', typeof FrameGenerator !== 'undefined' ? '✅' : '❌');
+console.log('- FFmpegHandler:', typeof FFmpegHandler !== 'undefined' ? '✅' : '❌');
+console.log('- SVGHandler:', typeof SVGHandler !== 'undefined' ? '✅' : '❌');
+
 // 主應用程式邏輯
 class LunaAnimationApp {
   constructor() {
     this.initializeElements();
     this.initializeEngine();
+    this.initializeParams();
     this.initializeEventListeners();
     this.loadUserPreferences();
     this.updateUI();
@@ -68,9 +76,32 @@ class LunaAnimationApp {
   initializeEngine() {
     this.animationEngine = new CircleAnimationEngine(this.canvas);
     this.frameGenerator = new FrameGenerator(this.animationEngine);
-    this.ffmpegHandler = new FFmpegHandler();
-    this.svgHandler = new SVGHandler();
 
+    // 延遲初始化 FFmpegHandler，確保類別已載入
+    this.ffmpegHandler = null;
+    this.svgHandler = new SVGHandler();
+  }
+
+  // 確保 FFmpegHandler 已初始化
+  ensureFFmpegHandler() {
+    if (!this.ffmpegHandler) {
+      if (typeof FFmpegHandler === 'undefined') {
+        console.warn('⚠️ FFmpegHandler 類別未載入，可能是腳本載入順序問題');
+        // 返回一個模擬的處理器，避免應用程式崩潰
+        return {
+          isAvailable: false,
+          checkFFmpegAvailability: async () => false,
+          ensureInitialized: async () => false,
+          generateGIFBuffer: async () => { throw new Error('FFmpeg 不可用'); }
+        };
+      }
+      this.ffmpegHandler = new FFmpegHandler();
+    }
+    return this.ffmpegHandler;
+  }
+
+  // 初始化完成後的設定
+  initializeParams() {
     // 動畫參數
     this.params = {
       shape: 'circle',
@@ -95,13 +126,18 @@ class LunaAnimationApp {
     this.animationEngine.setParams(this.params);
     this.animationEngine.start();
 
-    // 檢查 FFmpeg 可用性
-    this.checkFFmpegStatus();
+    // 延遲檢查 FFmpeg 可用性，確保所有腳本都已載入
+    setTimeout(() => {
+      this.checkFFmpegStatus().catch(error => {
+        console.warn('FFmpeg 狀態檢查失敗:', error);
+      });
+    }, 100);
   }
 
   // 檢查 FFmpeg 狀態
   async checkFFmpegStatus() {
-    const isAvailable = await this.ffmpegHandler.checkFFmpegAvailability();
+    const ffmpegHandler = this.ensureFFmpegHandler();
+    const isAvailable = await ffmpegHandler.checkFFmpegAvailability();
     const ffmpegButton = document.querySelector('[data-method="ffmpeg"]');
 
     if (isAvailable) {
@@ -505,10 +541,13 @@ class LunaAnimationApp {
 
   // 使用 FFmpeg 生成 GIF
   async generateGIFWithFFmpeg() {
-    // 確保 FFmpeg 初始化完成
-    await this.ffmpegHandler.ensureInitialized();
+    // 確保 FFmpegHandler 已初始化
+    const ffmpegHandler = this.ensureFFmpegHandler();
 
-    if (!this.ffmpegHandler.isAvailable) {
+    // 確保 FFmpeg 初始化完成
+    await ffmpegHandler.ensureInitialized();
+
+    if (!ffmpegHandler.isAvailable) {
       this.showStatus('❌ FFmpeg 不可用，請確認 FFmpeg 已正確安裝', 'error');
       return;
     }
@@ -536,7 +575,7 @@ class LunaAnimationApp {
       this.updateProgress(75, '正在轉換為 GIF...');
 
       // 使用 FFmpeg 生成 GIF 並通過輸出管理器保存
-      const gifBuffer = await this.ffmpegHandler.generateGIFBuffer(frames, {
+      const gifBuffer = await ffmpegHandler.generateGIFBuffer(frames, {
         fps: this.params.fps,
         quality: this.params.quality,
         transparent: this.params.transparent,
