@@ -285,9 +285,15 @@ async function emergencyFix() {
 if (typeof window !== 'undefined') {
   // 等待頁面載入完成
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', emergencyFix);
+    document.addEventListener('DOMContentLoaded', () => {
+      emergencyFix().catch(error => {
+        console.error('❌ 緊急修復失敗:', error);
+      });
+    });
   } else {
-    emergencyFix();
+    emergencyFix().catch(error => {
+      console.error('❌ 緊急修復失敗:', error);
+    });
   }
 }
 

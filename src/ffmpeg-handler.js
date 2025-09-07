@@ -3,7 +3,17 @@ class FFmpegHandler {
   constructor() {
     this.ffmpegPath = null;
     this.isAvailable = false;
-    this.checkFFmpegAvailability();
+    // 異步初始化，不在構造函數中等待
+    this.initPromise = this.checkFFmpegAvailability();
+  }
+
+  // 確保初始化完成
+  async ensureInitialized() {
+    if (this.initPromise) {
+      await this.initPromise;
+      this.initPromise = null;
+    }
+    return this.isAvailable;
   }
 
   // 檢查 FFmpeg 是否可用
@@ -135,20 +145,22 @@ class FFmpegHandler {
     console.log('原始輸出路徑:', outputPath);
     console.log('格式化輸出路徑:', normalizedOutputPath);
 
-    // 🔧 檢查輸入目錄是否存在檔案
-    try {
-      const fs = require('fs');
-      const files = fs.readdirSync(inputDir);
-      const pngFiles = files.filter(f => f.endsWith('.png') && f.startsWith('frame_'));
-      console.log(`📁 輸入目錄檔案檢查: ${pngFiles.length} 個 PNG 檔案`);
-      console.log(`📋 PNG 檔案列表: ${pngFiles.slice(0, 5).join(', ')}${pngFiles.length > 5 ? '...' : ''}`);
-
-      if (pngFiles.length === 0) {
-        throw new Error('輸入目錄中沒有找到 PNG 幀檔案');
+    // 🔧 檢查輸入目錄是否存在檔案（僅在 Electron 環境中）
+    if (typeof window !== 'undefined' && window.electronAPI) {
+      try {
+        // 在 Electron 環境中檢查檔案
+        const fileCheck = await window.electronAPI.ffmpeg.checkTempDirectory(inputDir);
+        if (!fileCheck.success) {
+          throw new Error(fileCheck.error || '輸入目錄中沒有找到 PNG 幀檔案');
+        }
+        console.log(`📁 輸入目錄檔案檢查: ${fileCheck.fileCount} 個 PNG 檔案`);
+      } catch (dirError) {
+        console.error('❌ 檢查輸入目錄失敗:', dirError.message);
+        throw new Error(`輸入目錄問題: ${dirError.message}`);
       }
-    } catch (dirError) {
-      console.error('❌ 檢查輸入目錄失敗:', dirError.message);
-      throw new Error(`輸入目錄問題: ${dirError.message}`);
+    } else {
+      // 瀏覽器環境中跳過檔案檢查
+      console.log('🌐 瀏覽器環境，跳過檔案系統檢查');
     }
 
     // 修正的 FFmpeg 命令，使用兩步法生成高品質 GIF

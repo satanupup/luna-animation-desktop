@@ -298,6 +298,9 @@ class SVGHandler {
       case 'rotate':
         this.addRotateAnimation(element, animationDuration, mode);
         break;
+      case 'swing':
+        this.addSwingAnimation(element, animationDuration, mode);
+        break;
       case 'fade':
         this.addFadeAnimation(element, animationDuration, mode);
         break;
@@ -306,6 +309,13 @@ class SVGHandler {
         break;
       case 'zoom':
         this.addZoomAnimation(element, animationDuration, mode);
+        break;
+      case 'spin':
+        this.addSpinAnimation(element, animationDuration, mode);
+        break;
+      default:
+        // 預設使用彈跳動畫
+        this.addBounceAnimation(element, animationDuration, mode);
         break;
     }
   }
@@ -387,6 +397,31 @@ class SVGHandler {
 
     // 添加 XML 聲明，確保 SVG 格式正確
     return `<?xml version="1.0" encoding="UTF-8"?>\n${svgString}`;
+  }
+
+  // 擺動動畫
+  addSwingAnimation(element, duration, mode) {
+    const animateTransform = document.createElementNS(this.svgNamespace, 'animateTransform');
+    animateTransform.setAttribute('attributeName', 'transform');
+    animateTransform.setAttribute('type', 'rotate');
+    animateTransform.setAttribute('values', '0 150 100; 15 150 100; -15 150 100; 0 150 100');
+    animateTransform.setAttribute('dur', duration + 's');
+    animateTransform.setAttribute('repeatCount', mode === 'loop' ? 'indefinite' : '1');
+    animateTransform.setAttribute('calcMode', 'spline');
+    animateTransform.setAttribute('keySplines', '0.25 0.1 0.25 1; 0.25 0.1 0.25 1; 0.25 0.1 0.25 1');
+    animateTransform.setAttribute('keyTimes', '0; 0.33; 0.66; 1');
+    element.appendChild(animateTransform);
+  }
+
+  // 自旋動畫
+  addSpinAnimation(element, duration, mode) {
+    const animateTransform = document.createElementNS(this.svgNamespace, 'animateTransform');
+    animateTransform.setAttribute('attributeName', 'transform');
+    animateTransform.setAttribute('type', 'rotate');
+    animateTransform.setAttribute('values', '0 150 100; 360 150 100');
+    animateTransform.setAttribute('dur', duration + 's');
+    animateTransform.setAttribute('repeatCount', mode === 'loop' ? 'indefinite' : '1');
+    element.appendChild(animateTransform);
   }
 
   // 下載 SVG 檔案 (已棄用 - 使用輸出管理器)

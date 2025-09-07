@@ -23,6 +23,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     createTempDirectory: () => ipcRenderer.invoke('ffmpeg-create-temp-directory'),
     saveFramesToTemp: (frames, tempDir) => ipcRenderer.invoke('ffmpeg-save-frames-to-temp', frames, tempDir),
     runCommand: (command) => ipcRenderer.invoke('ffmpeg-run-command', command),
+    checkTempDirectory: (tempDir) => ipcRenderer.invoke('ffmpeg-check-temp-directory', tempDir),
     cleanupTempDirectory: (tempDir) => ipcRenderer.invoke('ffmpeg-cleanup-temp-directory', tempDir)
   },
 

@@ -383,9 +383,6 @@ class LunaAnimationApp {
     } else if (method === 'svg') {
       this.methodDesc.textContent = '生成 SVG 向量動畫檔案，支援無限縮放，適合網頁和影片編輯軟體';
       this.generateBtn.textContent = '🎯 生成 SVG 動畫';
-    } else {
-      this.methodDesc.textContent = '直接用 ScreenToGif 錄製上方的動畫預覽';
-      this.generateBtn.textContent = '🎯 開始播放供錄製';
     }
   }
 
@@ -404,8 +401,6 @@ class LunaAnimationApp {
         await this.generateGIFWithFFmpeg();
       } else if (this.params.method === 'svg') {
         await this.generateSVGAnimation();
-      } else {
-        this.startRecordMode();
       }
 
       // 🔧 記錄性能指標
@@ -510,6 +505,9 @@ class LunaAnimationApp {
 
   // 使用 FFmpeg 生成 GIF
   async generateGIFWithFFmpeg() {
+    // 確保 FFmpeg 初始化完成
+    await this.ffmpegHandler.ensureInitialized();
+
     if (!this.ffmpegHandler.isAvailable) {
       this.showStatus('❌ FFmpeg 不可用，請確認 FFmpeg 已正確安裝', 'error');
       return;
@@ -770,17 +768,7 @@ class LunaAnimationApp {
     }
   }
 
-  // 開始錄製模式
-  startRecordMode() {
-    this.showStatus('🎬 動畫正在播放，請用 ScreenToGif 錄製上方的動畫預覽！', 'working');
 
-    // 重新開始動畫循環
-    this.animationEngine.restart();
-
-    setTimeout(() => {
-      this.showStatus('', '');
-    }, 5000);
-  }
 
   // 顯示/隱藏面板
   showPanel(type) {

@@ -523,6 +523,30 @@ ipcMain.handle('ffmpeg-run-command', async (_event, command) => {
   }
 });
 
+// FFmpeg 檢查臨時目錄
+ipcMain.handle('ffmpeg-check-temp-directory', async (_event, tempDir) => {
+  try {
+    if (!fs.existsSync(tempDir)) {
+      return { success: false, error: '臨時目錄不存在' };
+    }
+
+    const files = await fs.promises.readdir(tempDir);
+    const pngFiles = files.filter(f => f.endsWith('.png') && f.startsWith('frame_'));
+
+    console.log(`📁 檢查臨時目錄: ${tempDir}`);
+    console.log(`📋 PNG 檔案數量: ${pngFiles.length}`);
+
+    if (pngFiles.length === 0) {
+      return { success: false, error: '臨時目錄中沒有找到 PNG 幀檔案' };
+    }
+
+    return { success: true, fileCount: pngFiles.length, files: pngFiles };
+  } catch (error) {
+    console.error('檢查臨時目錄失敗:', error);
+    return { success: false, error: error.message };
+  }
+});
+
 ipcMain.handle('ffmpeg-cleanup-temp-directory', async (_event, tempDir) => {
   try {
     await fs.promises.rmdir(tempDir, { recursive: true });
