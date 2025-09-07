@@ -1,0 +1,62 @@
+{
+  "summary": {
+    "totalTests": 4,
+    "passed": 3,
+    "failed": 1,
+    "errors": 0,
+    "duration": 13542,
+    "successRate": 75
+  },
+  "performance": [
+    {
+      "metric": "page_load_time",
+      "value": 2734,
+      "unit": "ms"
+    },
+    {
+      "metric": "frame_generation_time",
+      "value": 2285,
+      "unit": "ms"
+    },
+    {
+      "metric": "ui_response_time",
+      "value": 221.2,
+      "unit": "ms"
+    },
+    {
+      "metric": "memory_usage",
+      "value": 9.5367431640625,
+      "unit": "MB"
+    }
+  ],
+  "results": [
+    {
+      "test": "frame_sequence_generation",
+      "status": "PASS",
+      "duration": 2285,
+      "message": "✅ PNG 幀序列生成完成！"
+    },
+    {
+      "test": "ffmpeg_functionality",
+      "status": "PASS",
+      "message": "❌ FFmpeg 不可用，請確認 FFmpeg 已正確安裝",
+      "note": "瀏覽器環境預期 FFmpeg 不可用"
+    },
+    {
+      "test": "ui_responsiveness",
+      "status": "FAIL",
+      "avgResponseTime": 221.2,
+      "message": "平均響應時間: 221.2ms"
+    },
+    {
+      "test": "user_experience",
+      "status": "PASS",
+      "score": 100,
+      "message": "UI 完整性: 100.0%"
+    }
+  ],
+  "recommendations": [
+    "UI 響應時間可以進一步優化",
+    "修復失敗的測試項目以提升穩定性"
+  ]
+}

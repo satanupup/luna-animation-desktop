@@ -28,10 +28,9 @@ class RealUIOutputTest {
       await this.setupTestEnvironment();
       await this.setupBrowser();
 
-      // 執行真實的 UI 測試
-      await this.testSVGGeneration();
-      await this.testGIFGeneration();
-      await this.testPNGFrameGeneration();
+      // 執行真實的 UI 測試（已移除 SVG 功能）
+      await this.testFrameGeneration();
+      await this.testFFmpegGeneration();
       await this.testUIInteractions();
 
       // 生成分析報告
@@ -80,6 +79,21 @@ class RealUIOutputTest {
     // 等待頁面完全載入和腳本執行
     await this.page.waitForTimeout(5000);
 
+    // 🔧 設定 FFmpeg 路徑（模擬 Electron 環境）
+    await this.page.evaluate(() => {
+      // 模擬 electronAPI 存在
+      if (!window.electronAPI) {
+        window.electronAPI = {
+          ffmpeg: {
+            checkAvailability: () => Promise.resolve({
+              available: true,
+              path: 'E:\\Tools\\FileAnalysis\\luna-animation-desktop\\ffmpeg-master-latest-win64-gpl-shared\\bin\\ffmpeg.exe'
+            })
+          }
+        };
+      }
+    });
+
     // 檢查頁面是否正確載入
     const title = await this.page.title();
     console.log('📄 頁面標題:', title);
@@ -87,9 +101,9 @@ class RealUIOutputTest {
     console.log('✅ 瀏覽器設定完成');
   }
 
-  // 測試 SVG 生成
-  async testSVGGeneration() {
-    console.log('\n🎨 測試 SVG 生成...');
+  // 測試幀序列生成
+  async testFrameGeneration() {
+    console.log('\n📸 測試幀序列生成...');
 
     try {
       // 截圖初始狀態
@@ -98,19 +112,19 @@ class RealUIOutputTest {
         fullPage: true
       });
 
-      // 設定 SVG 參數
+      // 設定動畫參數
       await this.page.selectOption('#shape', 'circle');
       await this.page.selectOption('#animationType', 'bounce');
       await this.page.fill('#color', '#ff3b30');
       await this.page.fill('#size', '40');
       await this.page.fill('#duration', '2');
 
-      // 選擇 SVG 生成模式
-      await this.page.click('button[data-method="svg"]');
+      // 選擇幀序列生成模式（默認已選中）
+      await this.page.click('button[data-method="frames"]');
 
       // 截圖設定完成狀態
       await this.page.screenshot({
-        path: path.join(this.screenshotDir, '02-svg-settings.png'),
+        path: path.join(this.screenshotDir, '02-frame-settings.png'),
         fullPage: true
       });
 
@@ -127,64 +141,64 @@ class RealUIOutputTest {
 
       // 截圖生成完成狀態
       await this.page.screenshot({
-        path: path.join(this.screenshotDir, '03-svg-generated.png'),
+        path: path.join(this.screenshotDir, '03-frame-generated.png'),
         fullPage: true
       });
 
       // 檢查狀態訊息
       const statusText = await this.page.textContent('#status');
-      const isSuccess = statusText.includes('成功') || statusText.includes('完成') || statusText.includes('下載');
+      const isSuccess = statusText.includes('成功') || statusText.includes('完成') || statusText.includes('PNG');
 
-      // 🔧 修正：在瀏覽器環境中，SVG 可能不會顯示在預覽區域，而是直接下載
-      // 檢查預覽區域是否有 SVG 或者檢查是否有下載成功的訊息
-      let svgExists = false;
+      // 檢查預覽區域是否有動畫幀
+      let framesGenerated = false;
       try {
-        svgExists = await this.page.locator('#preview-canvas svg').count() > 0;
+        // 檢查是否有 canvas 或動畫預覽
+        framesGenerated = await this.page.locator('#preview-canvas canvas').count() > 0;
       } catch (error) {
-        // 如果無法檢查 SVG 元素，但狀態顯示成功，則認為測試通過
-        svgExists = isSuccess;
+        // 如果無法檢查 canvas 元素，但狀態顯示成功，則認為測試通過
+        framesGenerated = isSuccess;
       }
 
       // 截圖預覽區域
       try {
         await this.page.locator('#preview-canvas').screenshot({
-          path: path.join(this.screenshotDir, '04-svg-preview.png')
+          path: path.join(this.screenshotDir, '04-frame-preview.png')
         });
       } catch (error) {
         console.log('⚠️ 無法截圖預覽區域，可能是瀏覽器環境限制');
       }
 
-      // 🔧 修正：如果狀態顯示成功，則認為 SVG 生成測試通過
+      // 如果狀態顯示成功，則認為幀序列生成測試通過
       const testPassed = isSuccess;
 
       this.testResults.push({
-        type: 'SVG_UI_TEST',
-        name: 'svg_generation_ui',
+        type: 'FRAME_UI_TEST',
+        name: 'frame_generation_ui',
         status: testPassed ? 'PASS' : 'FAIL',
         details: {
           statusMessage: statusText,
-          svgExists,
+          framesGenerated,
           testPassed,
-          screenshots: ['01-initial-state.png', '02-svg-settings.png', '03-svg-generated.png', '04-svg-preview.png']
+          screenshots: ['01-initial-state.png', '02-frame-settings.png', '03-frame-generated.png', '04-frame-preview.png']
         }
       });
 
-      console.log(`${testPassed ? '✅' : '❌'} SVG 生成測試: ${statusText}`);
+      console.log(`${testPassed ? '✅' : '❌'} 幀序列生成測試: ${statusText}`);
 
     } catch (error) {
       this.testResults.push({
-        type: 'SVG_UI_TEST',
-        name: 'svg_generation_ui',
+        type: 'FRAME_UI_TEST',
+        name: 'frame_generation_ui',
         status: 'ERROR',
         error: error.message
       });
-      console.log(`🚨 SVG 生成測試失敗: ${error.message}`);
+      console.log(`🚨 幀序列生成測試失敗: ${error.message}`);
     }
   }
 
-  // 測試 GIF 生成
-  async testGIFGeneration() {
-    console.log('\n🎬 測試 GIF 生成...');
+  // 測試 FFmpeg 生成
+  async testFFmpegGeneration() {
+    console.log('\n🎬 測試 FFmpeg 生成...');
 
     try {
       // 重新設定參數

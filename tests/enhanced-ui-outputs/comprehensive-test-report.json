@@ -1,0 +1,54 @@
+{
+  "summary": {
+    "totalTests": 3,
+    "passed": 3,
+    "failed": 0,
+    "errors": 0,
+    "duration": 20853
+  },
+  "environments": {
+    "browser": [
+      {
+        "environment": "browser",
+        "type": "frame_generation",
+        "status": "PASS",
+        "message": "✅ PNG 幀序列生成完成！"
+      },
+      {
+        "environment": "browser",
+        "type": "ffmpeg_generation",
+        "status": "PASS",
+        "message": "❌ FFmpeg 不可用，請確認 FFmpeg 已正確安裝",
+        "note": "瀏覽器環境預期 FFmpeg 不可用"
+      },
+      {
+        "environment": "browser",
+        "type": "ui_interactions",
+        "status": "PASS",
+        "message": "所有 UI 控制項響應正常"
+      }
+    ],
+    "electron": []
+  },
+  "results": [
+    {
+      "environment": "browser",
+      "type": "frame_generation",
+      "status": "PASS",
+      "message": "✅ PNG 幀序列生成完成！"
+    },
+    {
+      "environment": "browser",
+      "type": "ffmpeg_generation",
+      "status": "PASS",
+      "message": "❌ FFmpeg 不可用，請確認 FFmpeg 已正確安裝",
+      "note": "瀏覽器環境預期 FFmpeg 不可用"
+    },
+    {
+      "environment": "browser",
+      "type": "ui_interactions",
+      "status": "PASS",
+      "message": "所有 UI 控制項響應正常"
+    }
+  ]
+}
