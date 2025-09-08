@@ -37,7 +37,18 @@
     "test:e2e": "npx playwright test tests/e2e/",
     "test:watch": "node tests/watch-test.js",
     "test:report": "node tests/generate-report.js",
-    "build": "electron-builder",
+    "test:build": "node tests/build-test.js",
+    "fix:build": "node tools/fix-build-issues.js",
+    "build:solution": "node tests/build-solution.js",
+    "verify:build": "node tests/verify-build.js",
+    "copy:ffmpeg": "node tools/copy-ffmpeg-to-build.js",
+    "test:gif:output": "node tests/test-gif-output.js",
+    "build:complete": "npm run build:packager && npm run copy:ffmpeg && npm run test:gif:output",
+    "build:with-ffmpeg": "npm run build:packager && npm run copy:ffmpeg",
+    "test:final": "node tests/final-build-test.js",
+    "verify:final": "node tests/final-verification.js",
+    "build": "npm run build:packager && npm run copy:ffmpeg && npm run test:gif:output",
+    "build:electron-builder": "electron-builder",
     "build:win": "electron-builder --win",
     "build:portable": "electron-builder --win portable",
     "build:nsis": "electron-builder --win nsis",
@@ -46,7 +57,8 @@
     "build:installer": "node build-installer.js",
     "build:distribution": "node build-distribution.js",
     "create:installer": "node create-installer.js",
-    "release": "npm run build:installer"
+    "release": "npm run build:installer",
+    "build:packager": "electron-packager . \"璐娜的 GIF 動畫製作器\" --platform=win32 --arch=x64 --out=dist --overwrite --ignore=\"(tests|tools|builds|releases|archive|temp_.*|test-.*|debug-.*|\\.log|\\.md)$\""
   },
   "keywords": [
     "gif",
@@ -81,10 +93,16 @@
       "src/**/*",
       "assets/**/*",
       "ffmpeg-master-latest-win64-gpl-shared/**/*",
-      "!node_modules/**/*",
+      "!**/node_modules/**/*",
       "!tests/**/*",
+      "!tools/**/*",
+      "!builds/**/*",
+      "!releases/**/*",
+      "!archive/**/*",
       "!*.log",
-      "!temp_*"
+      "!temp_*",
+      "!test-*",
+      "!debug-*"
     ],
     "win": {
       "target": [

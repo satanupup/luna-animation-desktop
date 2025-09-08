@@ -1,0 +1,56 @@
+{
+  "timestamp": "2025-09-08T06:08:37.011Z",
+  "duration": "9.02s",
+  "summary": {
+    "totalSteps": 6,
+    "successfulSteps": 3,
+    "failedSteps": 3,
+    "totalIssues": 5,
+    "overallSuccess": false
+  },
+  "details": {
+    "steps": [
+      {
+        "step": 1,
+        "name": "清理環境",
+        "status": "success"
+      },
+      {
+        "step": 2,
+        "name": "編譯應用程式",
+        "status": "failed",
+        "error": "Command failed: npm run build:packager"
+      },
+      {
+        "step": 3,
+        "name": "複製 FFmpeg",
+        "status": "failed",
+        "error": "FFmpeg 複製失敗"
+      },
+      {
+        "step": 4,
+        "name": "驗證編譯結果",
+        "status": "success"
+      },
+      {
+        "step": 5,
+        "name": "測試 GIF 輸出",
+        "status": "success"
+      },
+      {
+        "step": 6,
+        "name": "最終驗證",
+        "status": "failed",
+        "error": "最終驗證失敗"
+      }
+    ],
+    "issues": [
+      "應用程式編譯失敗: Command failed: npm run build:packager",
+      "FFmpeg 複製失敗: FFmpeg 複製失敗",
+      "主程式文件不存在",
+      "FFmpeg 文件不存在",
+      "最終驗證失敗: 最終驗證失敗"
+    ],
+    "success": false
+  }
+}

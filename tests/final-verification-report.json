@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-09-08T06:38:43.879Z",
+  "summary": {
+    "structureOk": true,
+    "dependenciesOk": true,
+    "ffmpegOk": true,
+    "launchOk": true,
+    "overallSuccess": true,
+    "totalIssues": 0
+  },
+  "details": {
+    "structure": {
+      "璐娜的 GIF 動畫製作器.exe": {
+        "exists": true,
+        "size": 176813568,
+        "sizeFormatted": "168.62 MB"
+      },
+      "ffmpeg.exe": {
+        "exists": true,
+        "size": 527872,
+        "sizeFormatted": "515.5 KB"
+      },
+      "resources/app/package.json": {
+        "exists": true,
+        "size": 5509,
+        "sizeFormatted": "5.38 KB"
+      },
+      "resources/app/src/main.js": {
+        "exists": true,
+        "size": 24126,
+        "sizeFormatted": "23.56 KB"
+      },
+      "resources/app/node_modules/electron-store/index.js": {
+        "exists": true,
+        "size": 1869,
+        "sizeFormatted": "1.83 KB"
+      }
+    },
+    "dependencies": {
+      "electron-store": {
+        "exists": true,
+        "version": "8.2.0"
+      },
+      "conf": {
+        "exists": true,
+        "version": "10.2.0"
+      },
+      "type-fest": {
+        "exists": true,
+        "version": "2.19.0"
+      }
+    },
+    "ffmpeg": {
+      "dist/璐娜的 GIF 動畫製作器-win32-x64/ffmpeg.exe": {
+        "exists": true,
+        "working": true,
+        "version": "N-121001-gadc66f30ee-20250906"
+      },
+      "dist/璐娜的 GIF 動畫製作器-win32-x64/ffmpeg-master-latest-win64-gpl-shared/bin/ffmpeg.exe": {
+        "exists": true,
+        "working": true,
+        "version": "N-121001-gadc66f30ee-20250906"
+      }
+    },
+    "launch": {
+      "canLaunch": true,
+      "alreadyRunning": false
+    },
+    "issues": [],
+    "success": true
+  }
+}

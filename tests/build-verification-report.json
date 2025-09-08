@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-09-08T06:08:36.143Z",
+  "summary": {
+    "totalFiles": 0,
+    "existingFiles": 0,
+    "totalIssues": 7,
+    "buildSuccess": false
+  },
+  "details": {
+    "files": {
+      "dist/璐娜的 GIF 動畫製作器-win32-x64": {
+        "exists": false,
+        "type": "directory"
+      },
+      "dist/win-unpacked": {
+        "exists": false,
+        "type": "directory"
+      }
+    },
+    "structure": {},
+    "functionality": {
+      "dist/璐娜的 GIF 動畫製作器-win32-x64/璐娜的 GIF 動畫製作器.exe": {
+        "exists": false
+      },
+      "dist/win-unpacked/璐娜的 GIF 動畫製作器.exe": {
+        "exists": false
+      }
+    },
+    "issues": [
+      "缺少編譯輸出: dist/璐娜的 GIF 動畫製作器-win32-x64",
+      "缺少編譯輸出: dist/win-unpacked",
+      "主要編譯輸出目錄不存在",
+      "缺少執行檔: dist/璐娜的 GIF 動畫製作器-win32-x64/璐娜的 GIF 動畫製作器.exe",
+      "缺少執行檔: dist/win-unpacked/璐娜的 GIF 動畫製作器.exe",
+      "缺少 resources 目錄",
+      "缺少 locales 目錄"
+    ],
+    "recommendations": []
+  }
+}

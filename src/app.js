@@ -1,9 +1,52 @@
+// 簡單的日誌系統
+const Logger = {
+  isDev: window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1',
+
+  debug: function(message, ...args) {
+    if (this.isDev) {
+      console.log(`🔍 ${message}`, ...args);
+    }
+  },
+
+  info: function(message, ...args) {
+    if (this.isDev) {
+      console.log(`ℹ️ ${message}`, ...args);
+    }
+  },
+
+  warn: function(message, ...args) {
+    console.warn(`⚠️ ${message}`, ...args);
+  },
+
+  error: function(message, ...args) {
+    console.error(`❌ ${message}`, ...args);
+  },
+
+  success: function(message, ...args) {
+    if (this.isDev) {
+      console.log(`✅ ${message}`, ...args);
+    }
+  }
+};
+
 // 檢查必要的類別是否已載入（延遲檢查）
 setTimeout(() => {
-  console.log('🔍 檢查類別載入狀態:');
-  console.log('- CircleAnimationEngine:', typeof CircleAnimationEngine !== 'undefined' ? '✅' : '❌');
-  console.log('- FrameGenerator:', typeof FrameGenerator !== 'undefined' ? '✅' : '❌');
-  console.log('- FFmpegHandler:', typeof FFmpegHandler !== 'undefined' ? '✅' : '❌');
+  // 靜默檢查類別載入狀態
+  Logger.debug('檢查類別載入狀態:');
+  Logger.debug('- CircleAnimationEngine:', typeof CircleAnimationEngine !== 'undefined' ? '✅' : '❌');
+  Logger.debug('- FrameGenerator:', typeof FrameGenerator !== 'undefined' ? '✅' : '❌');
+  Logger.debug('- FFmpegHandler:', typeof FFmpegHandler !== 'undefined' ? '✅' : '❌');
+
+  // 檢查關鍵類別是否載入失敗
+  const missingClasses = [];
+  if (typeof CircleAnimationEngine === 'undefined') missingClasses.push('CircleAnimationEngine');
+  if (typeof FrameGenerator === 'undefined') missingClasses.push('FrameGenerator');
+  if (typeof FFmpegHandler === 'undefined') missingClasses.push('FFmpegHandler');
+
+  if (missingClasses.length > 0) {
+    Logger.error('關鍵類別載入失敗:', missingClasses.join(', '));
+    // 可以在這裡添加用戶友好的錯誤提示
+  }
 }, 50);
 
 // 主應用程式邏輯
@@ -87,7 +130,7 @@ class LunaAnimationApp {
   ensureFFmpegHandler() {
     if (!this.ffmpegHandler) {
       if (typeof FFmpegHandler === 'undefined') {
-        console.warn('⚠️ FFmpegHandler 類別未載入，可能是腳本載入順序問題');
+        Logger.warn('FFmpegHandler 類別未載入，可能是腳本載入順序問題');
         // 返回一個模擬的處理器，避免應用程式崩潰
         return {
           isAvailable: false,
@@ -131,7 +174,7 @@ class LunaAnimationApp {
     // 延遲檢查 FFmpeg 可用性，確保所有腳本都已載入
     setTimeout(() => {
       this.checkFFmpegStatus().catch(error => {
-        console.warn('FFmpeg 狀態檢查失敗:', error);
+        Logger.warn('FFmpeg 狀態檢查失敗:', error);
       });
     }, 100);
   }
@@ -337,7 +380,7 @@ class LunaAnimationApp {
         this.updateUI();
         this.updateEngine();
       } catch (error) {
-        console.error('載入偏好設定失敗:', error);
+        Logger.error('載入偏好設定失敗:', error);
       }
     }
   }
@@ -361,7 +404,7 @@ class LunaAnimationApp {
 
         await window.electronAPI.saveUserPreferences(preferences);
       } catch (error) {
-        console.error('儲存偏好設定失敗:', error);
+        Logger.error('儲存偏好設定失敗:', error);
       }
     }
   }
@@ -449,10 +492,10 @@ class LunaAnimationApp {
       const duration = performanceEnd - performanceStart;
       const memoryUsed = memoryEnd - memoryStart;
 
-      console.log(`⚡ 動畫生成性能: ${duration.toFixed(1)}ms, 記憶體使用: ${(memoryUsed / 1024 / 1024).toFixed(1)}MB`);
+      Logger.debug(`動畫生成性能: ${duration.toFixed(1)}ms, 記憶體使用: ${(memoryUsed / 1024 / 1024).toFixed(1)}MB`);
 
     } catch (error) {
-      console.error('❌ 動畫生成失敗:', error);
+      Logger.error('動畫生成失敗:', error);
       this.updateStatus('動畫生成失敗: ' + error.message, 'error');
     }
   }
@@ -492,7 +535,7 @@ class LunaAnimationApp {
         );
       } else {
         // 瀏覽器環境下的備用方案
-        console.log('🌐 瀏覽器環境，使用備用 PNG 幀保存方案');
+        Logger.info('瀏覽器環境，使用備用 PNG 幀保存方案');
         saveResult = this.savePNGFramesInBrowser(frames);
       }
 
@@ -517,9 +560,9 @@ class LunaAnimationApp {
           }
         } else {
           // 瀏覽器環境下的簡化提示
-          console.log('🎉 PNG 幀序列生成成功！');
+          Logger.success('PNG 幀序列生成成功！');
           if (saveResult.frameCount) {
-            console.log(`幀數量: ${saveResult.frameCount} 個`);
+            Logger.info(`幀數量: ${saveResult.frameCount} 個`);
           }
         }
       } else {
@@ -527,7 +570,7 @@ class LunaAnimationApp {
       }
 
     } catch (error) {
-      console.error('生成動畫失敗:', error);
+      Logger.error('生成動畫失敗:', error);
       this.showStatus('❌ 生成動畫時發生錯誤', 'error');
     } finally {
       // 重置狀態
@@ -589,7 +632,7 @@ class LunaAnimationApp {
       let saveResult;
       if (gifResult.success && gifResult.filePath) {
         // 🔧 修復：FFmpeg 已經生成了檔案，我們需要移動它到輸出目錄
-        console.log('🔄 準備保存 GIF 檔案:', gifResult.filePath);
+        Logger.debug('準備保存 GIF 檔案:', gifResult.filePath);
 
         try {
           // 使用輸出管理器處理已生成的 GIF 檔案
@@ -598,15 +641,15 @@ class LunaAnimationApp {
             this.params.animationType,
             this.params.shape
           );
-          console.log('✅ GIF 檔案保存結果:', saveResult);
+          Logger.debug('GIF 檔案保存結果:', saveResult);
         } catch (saveError) {
-          console.error('❌ GIF 檔案保存失敗:', saveError);
+          Logger.error('GIF 檔案保存失敗:', saveError);
           this.showStatus(`❌ GIF 保存失敗：${saveError.message}`, 'error');
           return;
         }
       } else {
         // 瀏覽器環境或其他情況的處理
-        console.error('❌ GIF 生成結果無效:', gifResult);
+        Logger.error('GIF 生成結果無效:', gifResult);
         this.showStatus('❌ GIF 生成失敗：不支援的環境', 'error');
         return;
       }
@@ -635,26 +678,25 @@ class LunaAnimationApp {
           }
         } else {
           // 瀏覽器環境下的簡化提示
-          console.log('🎉 GIF 動畫生成成功！');
+          Logger.success('GIF 動畫生成成功！');
           if (saveResult.filename) {
-            console.log(`檔案名稱: ${saveResult.filename}`);
+            Logger.info(`檔案名稱: ${saveResult.filename}`);
           }
         }
 
-        // 🔧 添加檔案位置提示
-        console.log('📁 GIF 檔案保存位置說明:');
-        console.log('  用戶目錄: C:\\Users\\[用戶名]\\Luna-Animations\\GIF\\');
-        console.log('  不是應用程式目錄: 應用程式安裝目錄下的 Luna-Animations 資料夾');
+        // 檔案位置提示（僅在開發模式下顯示詳細信息）
+        Logger.debug('GIF 檔案保存位置說明:');
+        Logger.debug('  用戶目錄: C:\\Users\\[用戶名]\\Luna-Animations\\GIF\\');
         if (saveResult && saveResult.filename) {
-          console.log('  檔案名稱:', saveResult.filename);
-          console.log('  完整路徑:', saveResult.path);
+          Logger.debug('  檔案名稱:', saveResult.filename);
+          Logger.debug('  完整路徑:', saveResult.path);
         }
       } else {
         this.showStatus('❌ 保存 GIF 失敗', 'error');
       }
 
     } catch (error) {
-      console.error('FFmpeg 生成 GIF 失敗:', error);
+      Logger.error('FFmpeg 生成 GIF 失敗:', error);
       this.showStatus(`❌ 生成 GIF 時發生錯誤: ${error.message}`, 'error');
     } finally {
       // 重置狀態
@@ -675,7 +717,7 @@ class LunaAnimationApp {
   // 瀏覽器環境下的 PNG 幀保存方案
   savePNGFramesInBrowser(frames) {
     try {
-      console.log(`🌐 瀏覽器環境：準備下載 ${frames.length} 個 PNG 幀`);
+      Logger.info(`瀏覽器環境：準備下載 ${frames.length} 個 PNG 幀`);
 
       // 為每個幀創建下載連結
       frames.forEach((frame, index) => {
@@ -705,7 +747,7 @@ class LunaAnimationApp {
         message: `${frames.length} 個 PNG 幀已下載`
       };
     } catch (error) {
-      console.error('❌ 瀏覽器 PNG 幀保存失敗:', error);
+      Logger.error('瀏覽器 PNG 幀保存失敗:', error);
       this.showStatus('❌ PNG 幀保存失敗: ' + error.message, 'error');
       return { success: false, error: error.message };
     }
@@ -729,7 +771,7 @@ class LunaAnimationApp {
 
       return result.canceled ? null : result.filePath;
     } catch (error) {
-      console.error('獲取儲存路徑失敗:', error);
+      Logger.error('獲取儲存路徑失敗:', error);
       return null;
     }
   }

@@ -1,0 +1,77 @@
+{
+  "timestamp": "2025-09-08T05:48:33.075Z",
+  "duration": "35.20s",
+  "summary": {
+    "totalIssues": 1,
+    "criticalIssues": 0,
+    "solutions": 1
+  },
+  "environment": {
+    "nodeVersion": "v22.12.0",
+    "npmVersion": "10.9.0",
+    "platform": "win32",
+    "arch": "x64",
+    "isAdmin": false
+  },
+  "permissions": {
+    "src": {
+      "exists": true,
+      "readable": true,
+      "writable": true
+    },
+    "assets": {
+      "exists": true,
+      "readable": true,
+      "writable": true
+    },
+    "ffmpeg-master-latest-win64-gpl-shared": {
+      "exists": true,
+      "readable": true,
+      "writable": true
+    },
+    "node_modules": {
+      "exists": true,
+      "readable": true,
+      "writable": true
+    },
+    "builderCache": "C:\\Users\\evalhero\\AppData\\Local\\electron-builder\\Cache"
+  },
+  "dependencies": {
+    "electron": {
+      "installed": true,
+      "version": "28.3.3"
+    },
+    "electron-builder": {
+      "installed": true,
+      "version": "24.13.3"
+    },
+    "playwright": {
+      "installed": true,
+      "version": "1.55.0"
+    }
+  },
+  "build": {
+    "基本編譯 (不簽名)": {
+      "success": false,
+      "error": "編譯失敗 (exit code: 1)",
+      "stderr": ""
+    },
+    "僅打包 (不建立安裝程式)": {
+      "success": false,
+      "error": "編譯失敗 (exit code: 1)",
+      "stderr": ""
+    }
+  },
+  "issues": [
+    {
+      "type": "warning",
+      "message": "建議以管理員權限執行以避免符號連結問題"
+    }
+  ],
+  "solutions": [
+    {
+      "issue": "符號連結權限問題",
+      "solution": "以管理員身份執行 PowerShell 或 CMD"
+    }
+  ]
+}

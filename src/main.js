@@ -313,15 +313,30 @@ ipcMain.handle('save-user-preferences', (_event, preferences) => {
 // FFmpeg 相關 IPC 處理器
 ipcMain.handle('ffmpeg-check-availability', async () => {
   try {
-    const appPath = process.cwd();
-    const projectFFmpegPath = path.join(appPath, 'ffmpeg-master-latest-win64-gpl-shared', 'bin', 'ffmpeg.exe');
+    // 獲取應用程式的實際路徑
+    const appPath = app.isPackaged ? path.dirname(process.execPath) : process.cwd();
+    console.log('🔍 應用程式路徑:', appPath);
+    console.log('🔍 是否已打包:', app.isPackaged);
 
-    if (fs.existsSync(projectFFmpegPath)) {
-      console.log('✅ 找到 FFmpeg:', projectFFmpegPath);
-      return { isAvailable: true, path: projectFFmpegPath };
+    // 嘗試多個可能的 FFmpeg 路徑
+    const possiblePaths = [
+      // 打包後的路徑
+      path.join(appPath, 'ffmpeg-master-latest-win64-gpl-shared', 'bin', 'ffmpeg.exe'),
+      path.join(appPath, 'resources', 'ffmpeg-master-latest-win64-gpl-shared', 'bin', 'ffmpeg.exe'),
+      path.join(appPath, 'ffmpeg.exe'),
+      // 開發環境路徑
+      path.join(process.cwd(), 'ffmpeg-master-latest-win64-gpl-shared', 'bin', 'ffmpeg.exe')
+    ];
+
+    for (const ffmpegPath of possiblePaths) {
+      console.log('🔍 檢查路徑:', ffmpegPath);
+      if (fs.existsSync(ffmpegPath)) {
+        console.log('✅ 找到 FFmpeg:', ffmpegPath);
+        return { isAvailable: true, path: ffmpegPath };
+      }
     }
 
-    console.log('❌ 未找到 FFmpeg');
+    console.log('❌ 未找到 FFmpeg，已檢查路徑:', possiblePaths);
     return { isAvailable: false, path: null };
   } catch (error) {
     console.error('檢查 FFmpeg 時發生錯誤:', error);
