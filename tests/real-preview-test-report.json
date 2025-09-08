@@ -1,0 +1,31 @@
+{
+  "appLaunch": true,
+  "previewTests": {
+    "應用程式穩定性": {
+      "success": true,
+      "result": {
+        "status": "running",
+        "pid": 6136,
+        "uptime": "3+ seconds"
+      }
+    },
+    "記憶體使用": {
+      "success": true,
+      "result": {
+        "pid": 6136,
+        "memoryUsage": "91"
+      }
+    },
+    "進程狀態": {
+      "success": true,
+      "result": {
+        "pid": 6136,
+        "killed": false,
+        "exitCode": null,
+        "signalCode": null,
+        "connected": false
+      }
+    }
+  },
+  "issues": []
+}

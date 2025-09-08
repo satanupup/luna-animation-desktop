@@ -50,6 +50,7 @@
     "test:preview": "node tests/enhanced-preview-test.js",
     "test:preview:quick": "node tests/quick-preview-test.js",
     "test:manual": "node tests/manual-verification-test.js",
+    "test:real:preview": "node tests/real-preview-test.js",
     "build": "npm run build:packager && npm run copy:ffmpeg && npm run test:gif:output",
     "build:electron-builder": "electron-builder",
     "build:win": "electron-builder --win",

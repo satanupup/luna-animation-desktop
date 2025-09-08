@@ -154,9 +154,19 @@ class CircleAnimationEngine extends AnimationEngine {
     const centerY = this.height / 2;
     const size = this.params.size;
 
+    // 保存當前狀態
+    this.ctx.save();
+
+    // 應用旋轉
+    if (this.params.rotation && this.params.rotation !== 0) {
+      this.ctx.translate(centerX, centerY);
+      this.ctx.rotate((this.params.rotation * Math.PI) / 180);
+      this.ctx.translate(-centerX, -centerY);
+    }
+
     // 設定顏色和線條樣式
-    this.ctx.strokeStyle = this.params.color;
-    this.ctx.fillStyle = this.params.color;
+    this.ctx.strokeStyle = this.params.strokeColor || this.params.color || '#cc2e24';
+    this.ctx.fillStyle = this.params.fillColor || this.params.color || '#ff3b30';
     this.ctx.lineWidth = this.params.strokeWidth || 4;
 
     switch (this.params.shape) {
@@ -295,6 +305,9 @@ class CircleAnimationEngine extends AnimationEngine {
       default:
         this.renderCircle(centerX, centerY, size, progress);
     }
+
+    // 恢復狀態
+    this.ctx.restore();
   }
 
   // 渲染不同形狀的方法
