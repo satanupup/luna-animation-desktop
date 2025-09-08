@@ -24,7 +24,8 @@ class LunaAnimationApp {
 
     // 控制項
     this.shapeSelect = document.getElementById('shape');
-    this.colorInput = document.getElementById('color');
+    this.fillColorInput = document.getElementById('fillColor');
+    this.strokeColorInput = document.getElementById('strokeColor');
     this.sizeInput = document.getElementById('size');
     this.sizeValue = document.getElementById('sizeValue');
     this.filledCheckbox = document.getElementById('filled');
@@ -105,7 +106,8 @@ class LunaAnimationApp {
     // 動畫參數
     this.params = {
       shape: 'circle',
-      color: '#ff3b30',
+      fillColor: '#ff3b30',
+      strokeColor: '#cc2e24',
       size: 40,
       filled: true,
       strokeWidth: 4,
@@ -158,8 +160,14 @@ class LunaAnimationApp {
       this.savePreferences();
     });
 
-    this.colorInput.addEventListener('input', (e) => {
-      this.params.color = e.target.value;
+    this.fillColorInput.addEventListener('input', (e) => {
+      this.params.fillColor = e.target.value;
+      this.updateEngine();
+      this.savePreferences();
+    });
+
+    this.strokeColorInput.addEventListener('input', (e) => {
+      this.params.strokeColor = e.target.value;
       this.updateEngine();
       this.savePreferences();
     });
@@ -361,7 +369,8 @@ class LunaAnimationApp {
   // 更新 UI 顯示值
   updateUI() {
     this.shapeSelect.value = this.params.shape;
-    this.colorInput.value = this.params.color;
+    this.fillColorInput.value = this.params.fillColor;
+    this.strokeColorInput.value = this.params.strokeColor;
     this.sizeInput.value = this.params.size;
     this.sizeValue.textContent = this.params.size + 'px';
     this.filledCheckbox.checked = this.params.filled;
@@ -783,7 +792,8 @@ class LunaAnimationApp {
   resetToDefaults() {
     this.params = {
       shape: 'circle',
-      color: '#ff3b30',
+      fillColor: '#ff3b30',
+      strokeColor: '#cc2e24',
       size: 40,
       filled: true,
       strokeWidth: 4,

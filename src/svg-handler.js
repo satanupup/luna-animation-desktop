@@ -6,7 +6,7 @@ class SVGHandler {
 
   // 生成 SVG 動畫
   generateSVGAnimation(params) {
-    const { shape, color, size, filled, strokeWidth, mode, type, speed, duration } = params;
+    const { shape, fillColor, strokeColor, size, filled, strokeWidth, mode, type, speed, duration } = params;
 
     // 創建 SVG 元素
     const svg = this.createSVGElement();
@@ -19,7 +19,7 @@ class SVGHandler {
     svg.appendChild(background);
 
     // 創建形狀元素
-    const shapeElement = this.createShapeElement(shape, size, filled, strokeWidth, color);
+    const shapeElement = this.createShapeElement(shape, size, filled, strokeWidth, fillColor, strokeColor);
 
     // 添加動畫
     this.addAnimationToShape(shapeElement, type, mode, speed, duration);
@@ -41,7 +41,7 @@ class SVGHandler {
   }
 
   // 創建形狀元素
-  createShapeElement(shape, size, filled, strokeWidth, color) {
+  createShapeElement(shape, size, filled, strokeWidth, fillColor, strokeColor) {
     let element;
     const centerX = 150;
     const centerY = 100;
@@ -137,11 +137,12 @@ class SVGHandler {
 
     // 設定樣式
     if (filled) {
-      element.setAttribute('fill', color);
-      element.setAttribute('stroke', 'none');
+      element.setAttribute('fill', fillColor);
+      element.setAttribute('stroke', strokeColor);
+      element.setAttribute('stroke-width', strokeWidth);
     } else {
       element.setAttribute('fill', 'none');
-      element.setAttribute('stroke', color);
+      element.setAttribute('stroke', strokeColor);
       element.setAttribute('stroke-width', strokeWidth);
     }
 
