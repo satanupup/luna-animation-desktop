@@ -6,6 +6,8 @@ yarn-error.log*
 
 # 建置輸出
 dist/
+dist-simple/
+dist-builder/
 build/
 out/
 
@@ -65,3 +67,16 @@ tests/real-ui-outputs/
 Luna-Animations/
 output/
 exports/
+
+# 測試目錄
+test-final/
+test-extract/
+test-output/
+test-fixed-output/
+test-app-output/
+test-temp/
+
+# 臨時檔案
+temp_/
+*.svg
+mock-svg-output.svg
