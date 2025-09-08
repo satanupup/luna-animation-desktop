@@ -258,6 +258,7 @@ class LunaAnimationApp {
     this.durationInput.addEventListener('input', (e) => {
       this.params.duration = parseFloat(e.target.value);
       this.updateUI();
+      this.updateEngine();
       this.savePreferences();
     });
 
@@ -283,6 +284,7 @@ class LunaAnimationApp {
 
     this.qualitySelect.addEventListener('change', (e) => {
       this.params.fps = parseInt(e.target.value);
+      this.updateEngine();
       this.savePreferences();
     });
 
@@ -446,6 +448,8 @@ class LunaAnimationApp {
   // 更新動畫引擎
   updateEngine() {
     this.animationEngine.setParams(this.params);
+    // 觸發重新渲染以更新預覽
+    this.animationEngine.render(Date.now());
   }
 
   // 選擇製作方式

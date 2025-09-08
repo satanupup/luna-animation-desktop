@@ -1,0 +1,557 @@
+{
+  "previewUpdates": {
+    "shape": {
+      "type": "select",
+      "results": [
+        {
+          "value": "circle",
+          "previewUpdated": true,
+          "timestamp": 1757314007757
+        },
+        {
+          "value": "square",
+          "previewUpdated": true,
+          "timestamp": 1757314008617
+        },
+        {
+          "value": "triangle",
+          "previewUpdated": true,
+          "timestamp": 1757314009479
+        }
+      ],
+      "successRate": 1
+    },
+    "fillColor": {
+      "type": "color",
+      "results": [
+        {
+          "value": "#ff0000",
+          "previewUpdated": true,
+          "timestamp": 1757314010341
+        },
+        {
+          "value": "#00ff00",
+          "previewUpdated": true,
+          "timestamp": 1757314011203
+        },
+        {
+          "value": "#0000ff",
+          "previewUpdated": true,
+          "timestamp": 1757314012067
+        }
+      ],
+      "successRate": 1
+    },
+    "strokeColor": {
+      "type": "color",
+      "results": [
+        {
+          "value": "#000000",
+          "previewUpdated": true,
+          "timestamp": 1757314012928
+        },
+        {
+          "value": "#ffffff",
+          "previewUpdated": true,
+          "timestamp": 1757314013791
+        },
+        {
+          "value": "#ff00ff",
+          "previewUpdated": true,
+          "timestamp": 1757314014654
+        }
+      ],
+      "successRate": 1
+    },
+    "size": {
+      "type": "range",
+      "results": [
+        {
+          "value": 20,
+          "previewUpdated": true,
+          "timestamp": 1757314015511
+        },
+        {
+          "value": 50,
+          "previewUpdated": true,
+          "timestamp": 1757314016359
+        },
+        {
+          "value": 80,
+          "previewUpdated": true,
+          "timestamp": 1757314017233
+        }
+      ],
+      "successRate": 1
+    },
+    "filled": {
+      "type": "checkbox",
+      "results": [
+        {
+          "value": true,
+          "previewUpdated": true,
+          "timestamp": 1757314018100
+        },
+        {
+          "value": false,
+          "previewUpdated": true,
+          "timestamp": 1757314019024
+        }
+      ],
+      "successRate": 1
+    },
+    "strokeWidth": {
+      "type": "range",
+      "results": [
+        {
+          "value": 1,
+          "previewUpdated": true,
+          "timestamp": 1757314019892
+        },
+        {
+          "value": 4,
+          "previewUpdated": true,
+          "timestamp": 1757314020757
+        },
+        {
+          "value": 8,
+          "previewUpdated": true,
+          "timestamp": 1757314021608
+        }
+      ],
+      "successRate": 1
+    },
+    "animationMode": {
+      "type": "select",
+      "results": [
+        {
+          "value": "loop",
+          "previewUpdated": true,
+          "timestamp": 1757314022459
+        },
+        {
+          "value": "enter-exit",
+          "previewUpdated": true,
+          "timestamp": 1757314023315
+        },
+        {
+          "value": "enter-only",
+          "previewUpdated": true,
+          "timestamp": 1757314024182
+        }
+      ],
+      "successRate": 1
+    },
+    "animationType": {
+      "type": "select",
+      "results": [
+        {
+          "value": "bounce",
+          "previewUpdated": true,
+          "timestamp": 1757314025055
+        },
+        {
+          "value": "slide",
+          "previewUpdated": true,
+          "timestamp": 1757314025931
+        },
+        {
+          "value": "fade",
+          "previewUpdated": false,
+          "timestamp": 1757314026792
+        },
+        {
+          "value": "zoom",
+          "previewUpdated": false,
+          "timestamp": 1757314027650
+        }
+      ],
+      "successRate": 0.5
+    },
+    "speed": {
+      "type": "range",
+      "results": [
+        {
+          "value": 500,
+          "previewUpdated": false,
+          "timestamp": 1757314028525
+        },
+        {
+          "value": 1000,
+          "previewUpdated": false,
+          "timestamp": 1757314029392
+        },
+        {
+          "value": 2000,
+          "previewUpdated": false,
+          "timestamp": 1757314030250
+        }
+      ],
+      "successRate": 0
+    },
+    "duration": {
+      "type": "range",
+      "results": [
+        {
+          "value": 1,
+          "previewUpdated": false,
+          "timestamp": 1757314031132
+        },
+        {
+          "value": 3,
+          "previewUpdated": false,
+          "timestamp": 1757314031993
+        },
+        {
+          "value": 5,
+          "previewUpdated": false,
+          "timestamp": 1757314032878
+        }
+      ],
+      "successRate": 0
+    },
+    "loops": {
+      "type": "select",
+      "results": [
+        {
+          "value": "infinite",
+          "previewUpdated": false,
+          "timestamp": 1757314033760
+        },
+        {
+          "value": "3",
+          "previewUpdated": false,
+          "timestamp": 1757314034625
+        },
+        {
+          "value": "5",
+          "previewUpdated": false,
+          "timestamp": 1757314035501
+        }
+      ],
+      "successRate": 0
+    },
+    "delay": {
+      "type": "range",
+      "results": [
+        {
+          "value": 0,
+          "previewUpdated": false,
+          "timestamp": 1757314036355
+        },
+        {
+          "value": 500,
+          "previewUpdated": false,
+          "timestamp": 1757314037226
+        },
+        {
+          "value": 1000,
+          "previewUpdated": false,
+          "timestamp": 1757314038075
+        }
+      ],
+      "successRate": 0
+    },
+    "rotation": {
+      "type": "range",
+      "results": [
+        {
+          "value": 0,
+          "previewUpdated": false,
+          "timestamp": 1757314038943
+        },
+        {
+          "value": 90,
+          "previewUpdated": false,
+          "timestamp": 1757314039809
+        },
+        {
+          "value": 180,
+          "previewUpdated": false,
+          "timestamp": 1757314040658
+        }
+      ],
+      "successRate": 0
+    },
+    "quality": {
+      "type": "select",
+      "results": [
+        {
+          "value": "12",
+          "previewUpdated": false,
+          "timestamp": 1757314041525
+        },
+        {
+          "value": "15",
+          "previewUpdated": false,
+          "timestamp": 1757314042411
+        },
+        {
+          "value": "20",
+          "previewUpdated": false,
+          "timestamp": 1757314043282
+        }
+      ],
+      "successRate": 0
+    }
+  },
+  "controlTests": {
+    "形狀選擇": {
+      "success": true,
+      "result": [
+        {
+          "shape": "circle",
+          "canvasVisible": true
+        },
+        {
+          "shape": "square",
+          "canvasVisible": true
+        },
+        {
+          "shape": "triangle",
+          "canvasVisible": true
+        },
+        {
+          "shape": "star",
+          "canvasVisible": true
+        },
+        {
+          "shape": "heart",
+          "canvasVisible": true
+        }
+      ]
+    },
+    "顏色控制": {
+      "success": true,
+      "result": [
+        {
+          "color": "#ff0000",
+          "fillSet": true,
+          "strokeSet": true
+        },
+        {
+          "color": "#00ff00",
+          "fillSet": true,
+          "strokeSet": true
+        },
+        {
+          "color": "#0000ff",
+          "fillSet": true,
+          "strokeSet": true
+        }
+      ]
+    },
+    "大小調整": {
+      "success": true,
+      "result": [
+        {
+          "size": 20,
+          "valueSet": true,
+          "displayUpdated": true
+        },
+        {
+          "size": 40,
+          "valueSet": true,
+          "displayUpdated": true
+        },
+        {
+          "size": 60,
+          "valueSet": true,
+          "displayUpdated": true
+        },
+        {
+          "size": 80,
+          "valueSet": true,
+          "displayUpdated": true
+        }
+      ]
+    },
+    "動畫設定": {
+      "success": true,
+      "result": [
+        {
+          "setting": {
+            "mode": "loop",
+            "type": "bounce",
+            "speed": 1000
+          },
+          "modeSet": true,
+          "typeSet": true,
+          "speedSet": true
+        },
+        {
+          "setting": {
+            "mode": "enter-exit",
+            "type": "slide",
+            "speed": 1500
+          },
+          "modeSet": true,
+          "typeSet": true,
+          "speedSet": true
+        },
+        {
+          "setting": {
+            "mode": "enter-only",
+            "type": "fade",
+            "speed": 2000
+          },
+          "modeSet": true,
+          "typeSet": true,
+          "speedSet": true
+        }
+      ]
+    },
+    "品質設定": {
+      "success": true,
+      "result": [
+        {
+          "quality": "12",
+          "valueSet": true
+        },
+        {
+          "quality": "15",
+          "valueSet": true
+        },
+        {
+          "quality": "20",
+          "valueSet": true
+        }
+      ]
+    },
+    "方式選擇": {
+      "success": true,
+      "result": [
+        {
+          "method": "frames",
+          "isActive": true
+        },
+        {
+          "method": "ffmpeg",
+          "isActive": true
+        }
+      ]
+    },
+    "面板控制": {
+      "success": false,
+      "error": "elementHandle.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    55 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    }
+  },
+  "performanceTests": {
+    "快速連續變更": {
+      "duration": 3521,
+      "changesPerSecond": "8.52"
+    },
+    "記憶體使用": {
+      "usedJSHeapSize": 10000000,
+      "totalJSHeapSize": 10000000,
+      "jsHeapSizeLimit": 3760000000
+    },
+    "響應時間": {
+      "average": 225,
+      "min": 213,
+      "max": 242,
+      "all": [
+        214,
+        215,
+        213,
+        242,
+        241
+      ]
+    }
+  },
+  "issues": [
+    {
+      "type": "warning",
+      "message": "控制項 animationType 值 fade 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 animationType 值 zoom 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 speed 值 500 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 speed 值 1000 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 speed 值 2000 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 duration 值 1 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 duration 值 3 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 duration 值 5 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 loops 值 infinite 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 loops 值 3 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 loops 值 5 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 delay 值 0 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 delay 值 500 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 delay 值 1000 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 rotation 值 0 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 rotation 值 90 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 rotation 值 180 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 quality 值 12 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 quality 值 15 未觸發預覽更新"
+    },
+    {
+      "type": "warning",
+      "message": "控制項 quality 值 20 未觸發預覽更新"
+    },
+    {
+      "type": "error",
+      "message": "面板控制 測試失敗: elementHandle.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    55 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    }
+  ],
+  "summary": {
+    "totalDuration": 85550,
+    "previewUpdateTests": 14,
+    "controlTests": 7,
+    "performanceTests": 3,
+    "totalIssues": 21,
+    "criticalIssues": 0,
+    "successfulPreviewUpdates": 7
+  }
+}

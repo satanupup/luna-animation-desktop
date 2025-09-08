@@ -112,7 +112,7 @@ class OptimizedUITest {
       // 設定參數
       await this.page.selectOption('#shape', 'circle');
       await this.page.selectOption('#animationType', 'bounce');
-      await this.page.fill('#color', '#ff3b30');
+      await this.page.fill('#fillColor', '#ff3b30');
       await this.page.fill('#size', '40');
       await this.page.fill('#duration', '2');
 
@@ -242,7 +242,7 @@ class OptimizedUITest {
     const interactions = [
       { action: 'selectOption', selector: '#shape', value: 'square' },
       { action: 'selectOption', selector: '#animationType', value: 'rotate' },
-      { action: 'fill', selector: '#color', value: '#00ff00' },
+      { action: 'fill', selector: '#fillColor', value: '#00ff00' },
       { action: 'fill', selector: '#size', value: '50' },
       { action: 'fill', selector: '#duration', value: '3' }
     ];
@@ -390,7 +390,7 @@ class OptimizedUITest {
       '#generateBtn',
       '#shape',
       '#animationType',
-      '#color',
+      '#fillColor',
       '#size',
       '#duration',
       'button[data-method="frames"]',
