@@ -43,6 +43,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     saveSVG: (svgContent, animationType, shape) => ipcRenderer.invoke('output-save-svg', svgContent, animationType, shape),
     savePNGFrames: (frames, animationType, shape) => ipcRenderer.invoke('output-save-png-frames', frames, animationType, shape),
     openFolder: (subFolder) => ipcRenderer.invoke('output-open-folder', subFolder),
+    openGIFFolder: () => ipcRenderer.invoke('output-open-gif-folder'), // 🔧 新增：開啟用戶目錄的 GIF 資料夾
     openFile: (filePath) => ipcRenderer.invoke('output-open-file', filePath),
     getStats: () => ipcRenderer.invoke('output-get-stats')
   },

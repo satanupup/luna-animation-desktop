@@ -701,6 +701,24 @@ ipcMain.handle('output-open-folder', async (_event, subFolder = null) => {
   }
 });
 
+// 🔧 新增：開啟用戶目錄的 GIF 資料夾
+ipcMain.handle('output-open-gif-folder', async (_event) => {
+  try {
+    const gifDir = path.join(os.homedir(), 'Luna-Animations', 'GIF');
+
+    // 確保目錄存在
+    await fs.promises.mkdir(gifDir, { recursive: true });
+
+    // 開啟目錄
+    await shell.openPath(gifDir);
+    console.log('📂 已開啟用戶 GIF 資料夾:', gifDir);
+    return true;
+  } catch (error) {
+    console.error('❌ 開啟用戶 GIF 資料夾失敗:', error);
+    throw new Error(`開啟 GIF 資料夾失敗: ${error.message}`);
+  }
+});
+
 ipcMain.handle('output-open-file', async (_event, filePath) => {
   try {
     const result = await outputManager.openFile(filePath);

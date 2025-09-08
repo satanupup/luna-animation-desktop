@@ -621,8 +621,8 @@ class LunaAnimationApp {
             // 開啟檔案
             await window.electronAPI.output.openFile(saveResult.path);
           } else if (result.response === 1) {
-            // 開啟 GIF 資料夾
-            await window.electronAPI.output.openFolder('GIF');
+            // 🔧 修復：開啟用戶目錄的 GIF 資料夾，而不是應用程式目錄
+            await window.electronAPI.output.openGIFFolder();
           }
         } else {
           // 瀏覽器環境下的簡化提示
