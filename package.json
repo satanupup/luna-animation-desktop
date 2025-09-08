@@ -44,6 +44,8 @@
     "dist": "npm run build:nsis",
     "pack": "electron-builder --dir",
     "build:installer": "node build-installer.js",
+    "build:distribution": "node build-distribution.js",
+    "create:installer": "node create-installer.js",
     "release": "npm run build:installer"
   },
   "keywords": [
