@@ -1,0 +1,126 @@
+{
+  "fillColor": {
+    "results": [
+      {
+        "color": "#ff0000",
+        "canvasDataChanged": true,
+        "pixelsChanged": 10257,
+        "actualColor": "#912121"
+      },
+      {
+        "color": "#00ff00",
+        "canvasDataChanged": true,
+        "pixelsChanged": 10291,
+        "actualColor": "#00ff00"
+      },
+      {
+        "color": "#0000ff",
+        "canvasDataChanged": true,
+        "pixelsChanged": 1263,
+        "actualColor": "#0000ff"
+      },
+      {
+        "color": "#ffff00",
+        "canvasDataChanged": true,
+        "pixelsChanged": 1233,
+        "actualColor": "#ffff00"
+      },
+      {
+        "color": "#ff00ff",
+        "canvasDataChanged": true,
+        "pixelsChanged": 3634,
+        "actualColor": "#ff00ff"
+      }
+    ],
+    "successRate": 1
+  },
+  "strokeColor": {
+    "results": [
+      {
+        "color": "#000000",
+        "canvasDataChanged": true,
+        "pixelsChanged": 2573,
+        "actualColor": "#000000"
+      },
+      {
+        "color": "#ffffff",
+        "canvasDataChanged": true,
+        "pixelsChanged": 928,
+        "actualColor": "#ffffff"
+      },
+      {
+        "color": "#ff0000",
+        "canvasDataChanged": true,
+        "pixelsChanged": 598,
+        "actualColor": "#ff0000"
+      },
+      {
+        "color": "#00ff00",
+        "canvasDataChanged": true,
+        "pixelsChanged": 796,
+        "actualColor": "#00ff00"
+      },
+      {
+        "color": "#0000ff",
+        "canvasDataChanged": true,
+        "pixelsChanged": 792,
+        "actualColor": "#0000ff"
+      }
+    ],
+    "successRate": 1
+  },
+  "rotation": {
+    "results": [
+      {
+        "angle": 0,
+        "canvasDataChanged": true,
+        "pixelsChanged": 1354,
+        "actualAngle": "0"
+      },
+      {
+        "angle": 45,
+        "canvasDataChanged": true,
+        "pixelsChanged": 390,
+        "actualAngle": "45"
+      },
+      {
+        "angle": 90,
+        "canvasDataChanged": true,
+        "pixelsChanged": 312,
+        "actualAngle": "90"
+      },
+      {
+        "angle": 135,
+        "canvasDataChanged": true,
+        "pixelsChanged": 564,
+        "actualAngle": "135"
+      },
+      {
+        "angle": 180,
+        "canvasDataChanged": true,
+        "pixelsChanged": 411,
+        "actualAngle": "180"
+      },
+      {
+        "angle": 225,
+        "canvasDataChanged": true,
+        "pixelsChanged": 1024,
+        "actualAngle": "225"
+      },
+      {
+        "angle": 270,
+        "canvasDataChanged": true,
+        "pixelsChanged": 719,
+        "actualAngle": "270"
+      },
+      {
+        "angle": 315,
+        "canvasDataChanged": true,
+        "pixelsChanged": 405,
+        "actualAngle": "315"
+      }
+    ],
+    "successRate": 1
+  },
+  "issues": []
+}

@@ -448,8 +448,8 @@ class LunaAnimationApp {
   // 更新動畫引擎
   updateEngine() {
     this.animationEngine.setParams(this.params);
-    // 觸發重新渲染以更新預覽
-    this.animationEngine.render(Date.now());
+    // 重新啟動動畫以確保參數變更立即生效
+    this.animationEngine.restart();
   }
 
   // 選擇製作方式
