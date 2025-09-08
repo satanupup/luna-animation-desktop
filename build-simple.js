@@ -13,7 +13,7 @@ console.log('=' .repeat(50));
 async function buildApp() {
   try {
     console.log('📦 開始打包應用程式...');
-    
+
     const options = {
       dir: '.',
       name: '璐娜的GIF動畫製作器',
@@ -21,10 +21,10 @@ async function buildApp() {
       arch: 'x64',
       out: 'dist-simple',
       overwrite: true,
-      asar: true,
+      asar: false, // 🔧 修復：禁用 asar 以確保依賴被正確包含
       icon: null, // 暫時不使用圖標
       ignore: [
-        /node_modules/,
+        // 🔧 修復：讓 electron-packager 自動處理所有依賴
         /tests/,
         /\.git/,
         /dist/,
@@ -37,35 +37,35 @@ async function buildApp() {
         'ffmpeg-master-latest-win64-gpl-shared'
       ]
     };
-    
+
     console.log('⚙️ 打包選項:');
     console.log(`  名稱: ${options.name}`);
     console.log(`  平台: ${options.platform}`);
     console.log(`  架構: ${options.arch}`);
     console.log(`  輸出: ${options.out}`);
-    
+
     const appPaths = await packager(options);
-    
+
     console.log('✅ 打包完成！');
     console.log('📁 輸出路徑:');
     appPaths.forEach(appPath => {
       console.log(`  ${appPath}`);
-      
+
       // 檢查檔案大小
       const stats = getDirectorySize(appPath);
       console.log(`  大小: ${(stats / 1024 / 1024).toFixed(1)} MB`);
     });
-    
+
     // 創建使用說明
     createReadme();
-    
+
     console.log('\n🎉 構建完成！');
     console.log('💡 使用方法:');
     console.log('  1. 進入 dist-simple 目錄');
     console.log('  2. 找到應用程式資料夾');
     console.log('  3. 執行 .exe 檔案');
     console.log('  4. 包含完整的 FFmpeg，無需額外安裝');
-    
+
   } catch (error) {
     console.error('❌ 打包失敗:', error);
     process.exit(1);
@@ -75,10 +75,10 @@ async function buildApp() {
 // 計算目錄大小
 function getDirectorySize(dirPath) {
   let totalSize = 0;
-  
+
   function calculateSize(currentPath) {
     const stats = fs.statSync(currentPath);
-    
+
     if (stats.isFile()) {
       totalSize += stats.size;
     } else if (stats.isDirectory()) {
@@ -88,13 +88,13 @@ function getDirectorySize(dirPath) {
       });
     }
   }
-  
+
   try {
     calculateSize(dirPath);
   } catch (error) {
     console.warn('⚠️ 無法計算目錄大小:', error.message);
   }
-  
+
   return totalSize;
 }
 
