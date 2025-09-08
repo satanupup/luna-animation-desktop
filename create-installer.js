@@ -71,94 +71,132 @@ async function createInstaller() {
     // 創建 Windows 批次安裝腳本
     const installBat = `@echo off
 chcp 65001 >nul
-echo 🌙 璐娜的 GIF 動畫製作器 - 自動安裝程式
+echo Luna GIF Animator - Auto Installer
 echo ================================================
 
 echo.
-echo 📋 檢查系統需求...
+echo Checking system requirements...
 
-:: 檢查 Node.js
+:: Check Node.js
 node --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ❌ 未找到 Node.js，請先安裝 Node.js
-    echo 💡 下載地址: https://nodejs.org/
+    echo [ERROR] Node.js not found, please install Node.js first
+    echo Download: https://nodejs.org/
     pause
     exit /b 1
 )
 
-echo ✅ Node.js 已安裝
+echo [OK] Node.js installed
 node --version
 
-:: 檢查 npm
+:: Check npm
 npm --version >nul 2>&1
 if %errorlevel% neq 0 (
-    echo ❌ 未找到 npm
+    echo [ERROR] npm not found
     pause
     exit /b 1
 )
 
-echo ✅ npm 已安裝
+echo [OK] npm installed
 npm --version
 
 echo.
-echo 📦 開始安裝璐娜的 GIF 動畫製作器...
+echo Installing Luna GIF Animator...
 
-:: 創建安裝目錄
+:: Create installation directory
 set INSTALL_DIR=%USERPROFILE%\\Luna-GIF-Animator
-echo 📁 安裝目錄: %INSTALL_DIR%
+echo Install directory: %INSTALL_DIR%
 
 if exist "%INSTALL_DIR%" (
-    echo 🔄 發現現有安裝，正在更新...
+    echo Found existing installation, updating...
     rmdir /s /q "%INSTALL_DIR%" 2>nul
 )
 
 mkdir "%INSTALL_DIR%" 2>nul
 
-:: 複製應用程式檔案
-echo 📋 複製應用程式檔案...
+:: Copy application files
+echo Copying application files...
 xcopy /E /I /H /Y "app\\*" "%INSTALL_DIR%\\" >nul
 
-:: 進入安裝目錄並安裝依賴
+:: Enter installation directory and install dependencies
 cd /d "%INSTALL_DIR%"
 
-echo 📦 安裝依賴套件...
+echo Installing dependencies...
 npm install --production
 
 if %errorlevel% neq 0 (
-    echo ❌ 依賴安裝失敗
+    echo [ERROR] Dependencies installation failed
     pause
     exit /b 1
 )
 
-echo ✅ 依賴安裝完成
+echo [OK] Dependencies installed
 
-:: 創建桌面快捷方式
-echo 🔗 創建桌面快捷方式...
-powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%USERPROFILE%\\Desktop\\璐娜的GIF動畫製作器.lnk'); $Shortcut.TargetPath = 'cmd.exe'; $Shortcut.Arguments = '/c cd /d \"%INSTALL_DIR%\" && npm start'; $Shortcut.WorkingDirectory = '%INSTALL_DIR%'; $Shortcut.IconLocation = '%INSTALL_DIR%\\assets\\icon.ico'; $Shortcut.Save()"
+:: Create desktop shortcut
+echo Creating desktop shortcut...
+powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%USERPROFILE%\\Desktop\\Luna GIF Animator.lnk'); $Shortcut.TargetPath = 'cmd.exe'; $Shortcut.Arguments = '/c cd /d \"%INSTALL_DIR%\" && npm start'; $Shortcut.WorkingDirectory = '%INSTALL_DIR%'; $Shortcut.IconLocation = '%INSTALL_DIR%\\assets\\icon.ico'; $Shortcut.Save()"
 
-:: 創建開始選單快捷方式
-echo 🔗 創建開始選單快捷方式...
+:: Create start menu shortcut
+echo Creating start menu shortcut...
 set START_MENU=%APPDATA%\\Microsoft\\Windows\\Start Menu\\Programs
-powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%START_MENU%\\璐娜的GIF動畫製作器.lnk'); $Shortcut.TargetPath = 'cmd.exe'; $Shortcut.Arguments = '/c cd /d \"%INSTALL_DIR%\" && npm start'; $Shortcut.WorkingDirectory = '%INSTALL_DIR%'; $Shortcut.IconLocation = '%INSTALL_DIR%\\assets\\icon.ico'; $Shortcut.Save()"
+powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%START_MENU%\\Luna GIF Animator.lnk'); $Shortcut.TargetPath = 'cmd.exe'; $Shortcut.Arguments = '/c cd /d \"%INSTALL_DIR%\" && npm start'; $Shortcut.WorkingDirectory = '%INSTALL_DIR%'; $Shortcut.IconLocation = '%INSTALL_DIR%\\assets\\icon.ico'; $Shortcut.Save()"
 
 echo.
-echo 🎉 安裝完成！
+echo Installation completed!
 echo.
-echo 📁 安裝位置: %INSTALL_DIR%
-echo 🖥️  桌面快捷方式: 璐娜的GIF動畫製作器
-echo 📋 開始選單: 璐娜的GIF動畫製作器
+echo Install location: %INSTALL_DIR%
+echo Desktop shortcut: Luna GIF Animator
+echo Start menu: Luna GIF Animator
 echo.
-echo 🚀 使用方法:
-echo   1. 雙擊桌面快捷方式啟動
-echo   2. 或在開始選單中找到並啟動
-echo   3. 或手動執行: cd "%INSTALL_DIR%" && npm start
+echo How to use:
+echo   1. Double-click desktop shortcut to start
+echo   2. Or find in start menu and launch
+echo   3. Or manually run: cd "%INSTALL_DIR%" && npm start
 echo.
-echo 📁 輸出檔案位置: %USERPROFILE%\\Luna-Animations\\
+echo Output files location: %USERPROFILE%\\Luna-Animations\\
 echo.
 pause
 `;
 
     fs.writeFileSync(path.join(installerDir, 'install.bat'), installBat, 'utf8');
+
+    // 創建簡化的中文安裝腳本
+    const installSimpleBat = `@echo off
+echo.
+echo Luna GIF Animator Installer
+echo.
+echo Please wait while installing...
+echo.
+
+:: Check Node.js
+node --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo Node.js not found!
+    echo Please download and install Node.js from: https://nodejs.org/
+    echo.
+    pause
+    exit /b 1
+)
+
+:: Install
+set INSTALL_DIR=%USERPROFILE%\\Luna-GIF-Animator
+if exist "%INSTALL_DIR%" rmdir /s /q "%INSTALL_DIR%" 2>nul
+mkdir "%INSTALL_DIR%" 2>nul
+xcopy /E /I /H /Y "app\\*" "%INSTALL_DIR%\\" >nul
+cd /d "%INSTALL_DIR%"
+npm install --production >nul 2>&1
+
+:: Create shortcuts
+powershell -Command "$WshShell = New-Object -comObject WScript.Shell; $Shortcut = $WshShell.CreateShortcut('%USERPROFILE%\\Desktop\\Luna GIF Animator.lnk'); $Shortcut.TargetPath = 'cmd.exe'; $Shortcut.Arguments = '/c cd /d \"%INSTALL_DIR%\" && npm start'; $Shortcut.WorkingDirectory = '%INSTALL_DIR%'; $Shortcut.Save()" >nul 2>&1
+
+echo.
+echo Installation completed!
+echo Desktop shortcut created: Luna GIF Animator
+echo.
+pause
+`;
+
+    fs.writeFileSync(path.join(installerDir, 'install-simple.bat'), installSimpleBat, 'utf8');
 
     // 創建 PowerShell 安裝腳本
     const installPs1 = `# 璐娜的 GIF 動畫製作器 - PowerShell 安裝腳本
