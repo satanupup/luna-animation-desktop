@@ -1,0 +1,56 @@
+{
+  "tests": {
+    "填充模式：紅色填充 + 藍色線條": {
+      "testCase": {
+        "name": "填充模式：紅色填充 + 藍色線條",
+        "fillColor": "#ff0000",
+        "strokeColor": "#0000ff",
+        "filled": true
+      },
+      "canvasChanged": true,
+      "colorAnalysis": {
+        "hasFillColor": true,
+        "hasStrokeColor": true,
+        "fillColorPixels": 4435,
+        "strokeColorPixels": 918,
+        "totalNonTransparentPixels": 5507
+      },
+      "success": true
+    },
+    "線條模式：只有藍色線條": {
+      "testCase": {
+        "name": "線條模式：只有藍色線條",
+        "fillColor": "#ff0000",
+        "strokeColor": "#0000ff",
+        "filled": false
+      },
+      "canvasChanged": true,
+      "colorAnalysis": {
+        "hasFillColor": false,
+        "hasStrokeColor": true,
+        "fillColorPixels": 0,
+        "strokeColorPixels": 987,
+        "totalNonTransparentPixels": 987
+      },
+      "success": true
+    },
+    "填充模式：綠色填充 + 黑色線條": {
+      "testCase": {
+        "name": "填充模式：綠色填充 + 黑色線條",
+        "fillColor": "#00ff00",
+        "strokeColor": "#000000",
+        "filled": true
+      },
+      "canvasChanged": true,
+      "colorAnalysis": {
+        "hasFillColor": true,
+        "hasStrokeColor": true,
+        "fillColorPixels": 4463,
+        "strokeColorPixels": 922,
+        "totalNonTransparentPixels": 5514
+      },
+      "success": true
+    }
+  },
+  "issues": []
+}

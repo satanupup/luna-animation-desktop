@@ -132,6 +132,21 @@ class AnimationEngine {
       return 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==';
     }
   }
+
+  // 通用的填充和描邊渲染方法
+  renderFillAndStroke() {
+    if (this.params.filled) {
+      // 如果是填充模式，先填充再描邊
+      this.ctx.fill();
+      // 只有在線條寬度大於 0 時才描邊
+      if (this.params.strokeWidth && this.params.strokeWidth > 0) {
+        this.ctx.stroke();
+      }
+    } else {
+      // 如果不是填充模式，只描邊
+      this.ctx.stroke();
+    }
+  }
 }
 
 // 圓形動畫引擎
@@ -483,11 +498,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.translate(centerX, y);
     this.ctx.beginPath();
     this.ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
     this.ctx.restore();
   }
 
@@ -498,11 +509,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.globalAlpha = 0.8 + 0.2 * Math.sin(progress * Math.PI * 2);
     this.ctx.beginPath();
     this.ctx.arc(0, 0, radius * scale, 0, Math.PI * 2);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
     this.ctx.restore();
   }
 
@@ -513,11 +520,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.rotate(angle);
     this.ctx.beginPath();
     this.ctx.arc(0, 0, radius, 0, Math.PI * 2);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 旋轉指示線
     this.ctx.beginPath();
@@ -536,11 +539,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.translate(swingX, swingY);
     this.ctx.beginPath();
     this.ctx.arc(0, 0, radius, 0, Math.PI * 2);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
     this.ctx.restore();
   }
 
@@ -558,11 +557,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.translate(centerX, y);
     this.ctx.beginPath();
     this.ctx.rect(-width/2, -height/2, width, height);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
     this.ctx.restore();
   }
 
@@ -574,11 +569,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.globalAlpha = 0.8 + 0.2 * Math.sin(progress * Math.PI * 2);
     this.ctx.beginPath();
     this.ctx.rect(-scaledSize/2, -scaledSize/2, scaledSize, scaledSize);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
     this.ctx.restore();
   }
 
@@ -589,11 +580,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.rotate(angle);
     this.ctx.beginPath();
     this.ctx.rect(-size/2, -size/2, size, size);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 旋轉指示線
     this.ctx.beginPath();
@@ -612,11 +599,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.translate(swingX, swingY);
     this.ctx.beginPath();
     this.ctx.rect(-size/2, -size/2, size, size);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
     this.ctx.restore();
   }
 
@@ -672,11 +655,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - size/2, y + height/2);
     this.ctx.lineTo(x + size/2, y + height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // ===== 星形動畫 =====
@@ -739,11 +718,7 @@ class CircleAnimationEngine extends AnimationEngine {
       }
     }
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // ===== 愛心動畫 =====
@@ -798,11 +773,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.bezierCurveTo(x + 12 * scale, y + 10 * scale, x + 12 * scale, y + 6 * scale, x + 8 * scale, y + 2 * scale);
     this.ctx.bezierCurveTo(x + 4 * scale, y - 2 * scale, x, y + 2 * scale, x, y + 5 * scale);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // ===== 通用動畫方法 =====
@@ -939,11 +910,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x, y + size/2);
     this.ctx.lineTo(x - size/2, y);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawPentagon(x, y, size) {
@@ -960,11 +927,7 @@ class CircleAnimationEngine extends AnimationEngine {
       }
     }
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawHexagon(x, y, size) {
@@ -981,11 +944,7 @@ class CircleAnimationEngine extends AnimationEngine {
       }
     }
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArrowRight(x, y, size) {
@@ -1000,11 +959,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + width/4, y + height/4);
     this.ctx.lineTo(x - width/2, y + height/4);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArrowLeft(x, y, size) {
@@ -1019,11 +974,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - width/4, y + height/4);
     this.ctx.lineTo(x + width/2, y + height/4);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArrowUp(x, y, size) {
@@ -1038,11 +989,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + width/4, y - height/4);
     this.ctx.lineTo(x + width/4, y + height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArrowDown(x, y, size) {
@@ -1057,11 +1004,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + width/4, y + height/4);
     this.ctx.lineTo(x + width/4, y - height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArrowDouble(x, y, size) {
@@ -1082,11 +1025,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - width/4, y + height/2);
     this.ctx.closePath();
 
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawCross(x, y, size) {
@@ -1108,11 +1047,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - length/2, y + thickness/2);
     this.ctx.closePath();
 
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawLine(x, y, size) {
@@ -1130,11 +1065,7 @@ class CircleAnimationEngine extends AnimationEngine {
     const height = size;
     this.ctx.beginPath();
     this.ctx.rect(x - width/2, y - height/2, width, height);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawOctagon(x, y, size) {
@@ -1151,11 +1082,7 @@ class CircleAnimationEngine extends AnimationEngine {
       }
     }
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // 箭頭系列
@@ -1181,11 +1108,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + width/6, y + height/4);
     this.ctx.lineTo(x - width/3, y + height/4);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArrowChevron(x, y, size) {
@@ -1202,11 +1125,7 @@ class CircleAnimationEngine extends AnimationEngine {
     const height = size * 0.8;
     this.ctx.beginPath();
     this.ctx.rect(x - width/2, y - height/2, width, height);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawDecision(x, y, size) {
@@ -1216,11 +1135,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x, y + size/2);
     this.ctx.lineTo(x - size/2, y);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawDocument(x, y, size) {
@@ -1234,11 +1149,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.quadraticCurveTo(x - width/4, y + height/2, x - width/2, y + height/3);
     this.ctx.lineTo(x - width/2, y - height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawDatabase(x, y, size) {
@@ -1249,11 +1160,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.beginPath();
     // 上橢圓
     this.ctx.ellipse(x, y - height/2 + ellipseHeight/2, width/2, ellipseHeight/2, 0, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 側邊
     this.ctx.beginPath();
@@ -1266,11 +1173,7 @@ class CircleAnimationEngine extends AnimationEngine {
     // 下橢圓
     this.ctx.beginPath();
     this.ctx.ellipse(x, y + height/2 - ellipseHeight/2, width/2, ellipseHeight/2, 0, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawCloud(x, y, size) {
@@ -1282,11 +1185,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.arc(x + radius * 1.5, y, radius * 1.5, 0, 2 * Math.PI);
     this.ctx.arc(x - radius, y - radius, radius, 0, 2 * Math.PI);
     this.ctx.arc(x + radius, y - radius, radius, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawCylinder(x, y, size) {
@@ -1297,11 +1196,7 @@ class CircleAnimationEngine extends AnimationEngine {
     // 上橢圓
     this.ctx.beginPath();
     this.ctx.ellipse(x, y - height/2, width/2, ellipseHeight, 0, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 側邊
     this.ctx.beginPath();
@@ -1314,11 +1209,7 @@ class CircleAnimationEngine extends AnimationEngine {
     // 下橢圓
     this.ctx.beginPath();
     this.ctx.ellipse(x, y + height/2, width/2, ellipseHeight, 0, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // 標註形狀
@@ -1327,11 +1218,7 @@ class CircleAnimationEngine extends AnimationEngine {
     // 主圓形
     this.ctx.beginPath();
     this.ctx.arc(x, y - size/6, radius * 0.8, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 指向線
     this.ctx.beginPath();
@@ -1339,11 +1226,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - radius/2, y + radius);
     this.ctx.lineTo(x, y + radius/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawCalloutSquare(x, y, size) {
@@ -1353,11 +1236,7 @@ class CircleAnimationEngine extends AnimationEngine {
     // 主方形
     this.ctx.beginPath();
     this.ctx.rect(x - width/2, y - height/2 - size/6, width, height);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 指向三角
     this.ctx.beginPath();
@@ -1365,11 +1244,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x, y + size/2);
     this.ctx.lineTo(x + width/6, y + height/2 - size/6);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawCalloutCloud(x, y, size) {
@@ -1381,21 +1256,13 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.arc(x + radius * 1.2, y - size/6, radius * 1.2, 0, 2 * Math.PI);
     this.ctx.arc(x - radius/2, y - size/3, radius * 0.8, 0, 2 * Math.PI);
     this.ctx.arc(x + radius/2, y - size/3, radius * 0.8, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 小泡泡
     this.ctx.beginPath();
     this.ctx.arc(x - radius, y + radius, radius * 0.4, 0, 2 * Math.PI);
     this.ctx.arc(x - radius/2, y + radius * 1.5, radius * 0.2, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawBanner(x, y, size) {
@@ -1409,11 +1276,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + width/3, y + height/2);
     this.ctx.lineTo(x - width/2, y + height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawRibbon(x, y, size) {
@@ -1428,11 +1291,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - width/2, y + height/2);
     this.ctx.lineTo(x - width/3, y);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // 特殊形狀
@@ -1452,11 +1311,7 @@ class CircleAnimationEngine extends AnimationEngine {
       }
     }
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawStar6(x, y, size) {
@@ -1467,11 +1322,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x - radius * 0.866, y + radius/2);
     this.ctx.lineTo(x + radius * 0.866, y + radius/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 下三角
     this.ctx.beginPath();
@@ -1479,11 +1330,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + radius * 0.866, y - radius/2);
     this.ctx.lineTo(x - radius * 0.866, y - radius/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawLightning(x, y, size) {
@@ -1499,11 +1346,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + size/6, y + size/6);
     this.ctx.lineTo(x - size/4, y + size/6);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawGear(x, y, size) {
@@ -1524,20 +1367,12 @@ class CircleAnimationEngine extends AnimationEngine {
       }
     }
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
 
     // 中心圓
     this.ctx.beginPath();
     this.ctx.arc(x, y, innerRadius / 2, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   // 幾何圖形
@@ -1552,11 +1387,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + width/2 - skew, y + height/2);
     this.ctx.lineTo(x - width/2 - skew, y + height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawTrapezoid(x, y, size) {
@@ -1570,21 +1401,13 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.lineTo(x + bottomWidth/2, y + height/2);
     this.ctx.lineTo(x - bottomWidth/2, y + height/2);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawEllipse(x, y, size) {
     this.ctx.beginPath();
     this.ctx.ellipse(x, y, size/2, size/3, 0, 0, 2 * Math.PI);
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 
   drawArc(x, y, size) {
@@ -1598,11 +1421,7 @@ class CircleAnimationEngine extends AnimationEngine {
     this.ctx.moveTo(x, y);
     this.ctx.arc(x, y, size/2, -Math.PI/4, Math.PI/4);
     this.ctx.closePath();
-    if (this.params.filled) {
-      this.ctx.fill();
-    } else {
-      this.ctx.stroke();
-    }
+    this.renderFillAndStroke();
   }
 }
 

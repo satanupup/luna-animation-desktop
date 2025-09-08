@@ -438,11 +438,8 @@ class LunaAnimationApp {
 
   // 更新線條粗細控制項的可見性
   updateStrokeWidthVisibility() {
-    if (this.params.filled) {
-      this.strokeWidthContainer.style.display = 'none';
-    } else {
-      this.strokeWidthContainer.style.display = 'block';
-    }
+    // 線條寬度控制項應該始終可見，因為填充和線條可以同時存在
+    this.strokeWidthContainer.style.display = 'block';
   }
 
   // 更新動畫引擎

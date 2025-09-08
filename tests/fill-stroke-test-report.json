@@ -1,0 +1,88 @@
+{
+  "fillStrokeTests": {
+    "紅色填充 + 藍色線條": {
+      "testCase": {
+        "name": "紅色填充 + 藍色線條",
+        "fillColor": "#ff0000",
+        "strokeColor": "#0000ff",
+        "filled": true,
+        "strokeWidth": 4
+      },
+      "success": false,
+      "error": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"4\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    "綠色填充 + 黑色線條": {
+      "testCase": {
+        "name": "綠色填充 + 黑色線條",
+        "fillColor": "#00ff00",
+        "strokeColor": "#000000",
+        "filled": true,
+        "strokeWidth": 6
+      },
+      "success": false,
+      "error": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"6\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    "黃色填充 + 紫色線條": {
+      "testCase": {
+        "name": "黃色填充 + 紫色線條",
+        "fillColor": "#ffff00",
+        "strokeColor": "#800080",
+        "filled": true,
+        "strokeWidth": 8
+      },
+      "success": false,
+      "error": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"8\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    "只有藍色線條（無填充）": {
+      "testCase": {
+        "name": "只有藍色線條（無填充）",
+        "fillColor": "#ff0000",
+        "strokeColor": "#0000ff",
+        "filled": false,
+        "strokeWidth": 4
+      },
+      "canvasChanged": true,
+      "colorAnalysis": {
+        "hasFillColor": false,
+        "hasStrokeColor": true,
+        "fillColorPixels": 0,
+        "strokeColorPixels": 990,
+        "totalNonTransparentPixels": 990
+      },
+      "success": false
+    },
+    "白色填充 + 紅色線條": {
+      "testCase": {
+        "name": "白色填充 + 紅色線條",
+        "fillColor": "#ffffff",
+        "strokeColor": "#ff0000",
+        "filled": true,
+        "strokeWidth": 3
+      },
+      "success": false,
+      "error": "page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"3\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    }
+  },
+  "issues": [
+    {
+      "type": "error",
+      "message": "紅色填充 + 藍色線條 測試錯誤: page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"4\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    58 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "type": "error",
+      "message": "綠色填充 + 黑色線條 測試錯誤: page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"6\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "type": "error",
+      "message": "黃色填充 + 紫色線條 測試錯誤: page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"8\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    },
+    {
+      "type": "error",
+      "message": "只有藍色線條（無填充） 測試失敗"
+    },
+    {
+      "type": "error",
+      "message": "白色填充 + 紅色線條 測試錯誤: page.fill: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#strokeWidth')\u001b[22m\n\u001b[2m    - locator resolved to <input min=\"1\" max=\"8\" value=\"4\" type=\"range\" id=\"strokeWidth\"/>\u001b[22m\n\u001b[2m    - fill(\"3\")\u001b[22m\n\u001b[2m  - attempting fill action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying fill action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    59 × waiting for element to be visible, enabled and editable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying fill action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n"
+    }
+  ]
+}
