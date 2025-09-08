@@ -42,7 +42,9 @@
     "build:portable": "electron-builder --win portable",
     "build:nsis": "electron-builder --win nsis",
     "dist": "npm run build:nsis",
-    "pack": "electron-builder --dir"
+    "pack": "electron-builder --dir",
+    "build:installer": "node build-installer.js",
+    "release": "npm run build:installer"
   },
   "keywords": [
     "gif",
@@ -76,12 +78,22 @@
     "files": [
       "src/**/*",
       "assets/**/*",
-      "!node_modules/**/*"
+      "ffmpeg-master-latest-win64-gpl-shared/**/*",
+      "!node_modules/**/*",
+      "!tests/**/*",
+      "!*.log",
+      "!temp_*"
     ],
     "win": {
       "target": [
         {
-          "target": "dir",
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
           "arch": [
             "x64"
           ]
@@ -89,10 +101,14 @@
       ],
       "sign": false,
       "verifyUpdateCodeSignature": false,
+      "certificateFile": null,
+      "certificatePassword": null,
       "publisherName": "Luna Animation",
       "requestedExecutionLevel": "asInvoker"
     },
     "forceCodeSigning": false,
+    "afterSign": null,
+    "afterAllArtifactBuild": null,
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景圓形 -->
+  <circle cx="128" cy="128" r="120" fill="#4A90E2" stroke="#2E5C8A" stroke-width="4"/>
+  
+  <!-- 月亮形狀 (璐娜) -->
+  <path d="M 80 80 Q 120 60 160 80 Q 180 120 160 160 Q 120 180 80 160 Q 60 120 80 80 Z" 
+        fill="#FFE4B5" stroke="#FFD700" stroke-width="2"/>
+  
+  <!-- 動畫波紋 -->
+  <circle cx="128" cy="128" r="90" fill="none" stroke="#87CEEB" stroke-width="3" opacity="0.6">
+    <animate attributeName="r" values="90;100;90" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.3;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- GIF 文字 -->
+  <text x="128" y="140" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="24" font-weight="bold" fill="#FFFFFF">GIF</text>
+  
+  <!-- 星星裝飾 -->
+  <polygon points="200,60 205,70 215,70 207,77 210,87 200,80 190,87 193,77 185,70 195,70" 
+           fill="#FFD700"/>
+  <polygon points="50,200 53,206 59,206 54,210 56,216 50,212 44,216 46,210 41,206 47,206" 
+           fill="#FFD700"/>
+  
+  <!-- 動畫製作器標識 -->
+  <rect x="100" y="200" width="56" height="20" rx="10" fill="#FF6B6B" opacity="0.8"/>
+  <text x="128" y="213" text-anchor="middle" font-family="Arial, sans-serif" 
+        font-size="10" font-weight="bold" fill="#FFFFFF">MAKER</text>
+</svg>
