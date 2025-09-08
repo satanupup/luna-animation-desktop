@@ -14,6 +14,11 @@ async function buildApp() {
   try {
     console.log('📦 開始打包應用程式...');
 
+    // 🔧 修復：先確保所有依賴都正確安裝
+    console.log('🔄 確保依賴完整性...');
+    const { execSync } = require('child_process');
+    execSync('npm install', { stdio: 'inherit' });
+
     const options = {
       dir: '.',
       name: '璐娜的GIF動畫製作器',
@@ -23,15 +28,19 @@ async function buildApp() {
       overwrite: true,
       asar: false, // 🔧 修復：禁用 asar 以確保依賴被正確包含
       icon: null, // 暫時不使用圖標
+      prune: false, // 🔧 修復：不要修剪依賴，保持完整
       ignore: [
-        // 🔧 修復：讓 electron-packager 自動處理所有依賴
+        // 🔧 修復：只忽略明確不需要的檔案
         /tests/,
         /\.git/,
         /dist/,
         /dist-simple/,
+        /test-extract/,
+        /release/,
         /temp_/,
         /\.log$/,
-        /build-/
+        /build-.*\.js$/,
+        /create-release\.js$/
       ],
       extraResource: [
         'ffmpeg-master-latest-win64-gpl-shared'
