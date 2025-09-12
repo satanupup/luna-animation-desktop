@@ -43,7 +43,7 @@ Thumbs.db
 # Electron
 app/
 release/
-
+releases
 # 日誌
 logs
 *.log
